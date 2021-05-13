@@ -10,10 +10,11 @@
   ],
   "scripts": {
     "init": "git config core.hooksPath ./.hooks",
-    "lint": "eslint src test --ext .ts && tsc --noEmit",
+    "lint": "eslint src test --ext .ts",
     "test": "mocha -r ts-node/register test/globals.ts test/specs/*.ts",
-    "test:dist": "npm run build && HANDLER_PATH=../dist npm test",
+    "test:dist": "npm run build && TARGET_PATH=../dist npm test",
     "build": "rm -rf dist && tsc",
+    "update-proto": "cp -R node_modules/ydb-sdk/proto ./proto",
     "release": "npm run lint && npm run test:dist && npm version $VER && npm publish && git push --follow-tags --no-verify",
     "release-patch": "VER=patch npm run release",
     "release-minor": "VER=minor npm run release"
@@ -22,17 +23,19 @@
     "{src,test}/**/*.ts": "eslint --ext .ts"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.17",
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.0.1",
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
+    "dotenv": "^9.0.2",
     "eslint": "^7.24.0",
     "eslint-plugin-mocha": "^8.1.0",
     "lint-staged": "^10.5.4",
     "mocha": "^8.3.2",
     "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "yandex-cloud": "^1.4.3",
+    "ydb-sdk": "^1.9.0"
   },
   "author": {
     "name": "Vitaliy Potapov",
