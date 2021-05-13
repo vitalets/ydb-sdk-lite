@@ -1,0 +1,11 @@
+.DS_Store
+.vscode
+
+# npm
+node_modules
+npm-debug.log
+
+# env
+.env*
+
+dist
