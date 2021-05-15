@@ -3,7 +3,6 @@ import { strict as assert } from 'assert';
 import { Session } from 'yandex-cloud';
 import { Ydb } from '../src';
 
-const targetPath = process.env.TARGET_PATH || '../src';
 const oauthToken = process.env.YC_OAUTH_TOKEN!;
 const dbName = process.env.YDB_NAME!;
 
@@ -14,15 +13,19 @@ declare global {
   const ydb: Ydb;
 }
 
+const tablePathPrefix = 'test';
+
 before(async () => {
-  const { Ydb } = await import(targetPath);
   const iamToken = await getIamToken();
-  const ydb = new Ydb({ dbName, iamToken });
+  const ydb = new Ydb({ dbName, iamToken, tablePathPrefix });
 
   Object.assign(global, {
     assert,
     ydb,
   });
+
+  await dropTableUsers();
+  await createTableUsers();
 });
 
 afterEach(async () => {
@@ -32,4 +35,27 @@ afterEach(async () => {
 async function getIamToken() {
   const session = new Session({ oauthToken });
   return (session as any).__tokenCreator(); // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+
+async function dropTableUsers() {
+  try {
+    await ydb.executeYql(`DROP TABLE users`);
+  } catch (e) {
+    if (!e.message.includes('Cannot find table')) {
+      throw e;
+    }
+  }
+}
+
+async function createTableUsers() {
+  const query = `
+    CREATE TABLE users (
+      id Uint64,
+      name Utf8,
+      isAdmin Bool,
+      createdAt Datetime,
+      PRIMARY KEY (id)
+    );
+  `;
+  await ydb.executeYql(query);
 }
