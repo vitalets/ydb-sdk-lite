@@ -50,7 +50,7 @@ async function dropTableUsers() {
 async function createTableUsers() {
   const query = `
     CREATE TABLE users (
-      id Uint64,
+      id String,
       name Utf8,
       isAdmin Bool,
       createdAt Datetime,

@@ -23,8 +23,7 @@ exports.handler = async (event, ctx) => {
 
   // execute yql query
   const query = 'select * from users';
-  const { resultSets } = await ydb.executeQuery(query);
-  const users = Ydb.toJs(resultSets[0]);
+  const [ users ] = await ydb.executeQuery(query);
   console.log(users);
   /*
    [

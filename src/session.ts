@@ -3,7 +3,7 @@
  */
 import { Grpc, getOperationPayload } from './grpc';
 import { Ydb } from '../proto/bundle';
-import { Query } from './query';
+import { DataQuery } from './query/data-query';
 
 const CreateSessionResult = Ydb.Table.CreateSessionResult;
 
@@ -19,8 +19,8 @@ export class Session {
     this.sessionId = CreateSessionResult.decode(payload).sessionId;
   }
 
-  async executeQuery(...args: Parameters<typeof Query.prototype.execute>) {
-    return new Query(this.grpc, this.tablePathPrefix, this.sessionId).execute(...args);
+  async executeQuery(...args: Parameters<typeof DataQuery.prototype.execute>) {
+    return new DataQuery(this.grpc, this.tablePathPrefix, this.sessionId).execute(...args);
   }
 
   async destroy() {

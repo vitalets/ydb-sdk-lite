@@ -3,7 +3,7 @@
  */
 import { Grpc, GrpcOptions } from './grpc';
 import { Session } from './session';
-import { Yql } from './query';
+import { YqlQuery } from './query/yql-query';
 
 type YdbOptions = GrpcOptions & {
   tablePathPrefix?: string;
@@ -37,8 +37,8 @@ export class Ydb {
    * - query can contain DDL instructions (CREATE TABLE, ALTER TABLE, etc)
    * - query can not be prepared and cached on server
    */
-  async executeYql(...args: Parameters<typeof Yql.prototype.execute>) {
-    return new Yql(this.grpc, this.tablePathPrefix).execute(...args);
+  async executeYql(...args: Parameters<typeof YqlQuery.prototype.execute>) {
+    return new YqlQuery(this.grpc, this.tablePathPrefix).execute(...args);
   }
 
   /**
