@@ -5,7 +5,7 @@ Mainly for usage in serverless functions.
 ## Comparison
 |   | ydb-sdk-lite  | ydb-sdk |
 | - | - | - |
-| require time | ~30ms  | ~300ms  |
+| require time | ~40ms  | ~300ms  |
 | size | tbd  | tbd  |
 | parameters support | no  | yes  |
 
