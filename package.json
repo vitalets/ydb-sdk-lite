@@ -2,23 +2,17 @@
   "name": "ydb-sdk-lite",
   "description": "Lightweight implementation of Yandex Database SDK for Node.js",
   "version": "1.0.5",
-  "main": "dist/cjs/index.js",
-  "exports": {
-    "import": "./dist/esm/index.js",
-    "require": "./dist/cjs/index.js"
-  },
+  "main": "dist/index.js",
   "files": [
     "dist",
+    "proto",
     "README.md"
   ],
   "scripts": {
     "init": "git config core.hooksPath ./.hooks",
     "lint": "eslint src test --ext .ts",
     "test": "mocha -r ts-node/register test/globals.ts test/specs/*.ts",
-    "build:cjs": "tsc",
-    "build:esm": "tsc --module esnext --outDir dist/esm && echo '{\"type\": \"module\"}' > dist/esm/package.json",
-    "build:proto": "cp -R ./proto dist/proto",
-    "build": "rm -rf dist && npm run build:cjs && npm run build:esm && npm run build:proto",
+    "build": "rm -rf dist && tsc",
     "update-proto": "cp -R node_modules/ydb-sdk/proto ./proto",
     "release": "npm run lint && npm t && npm run build && npm version $VER && npm publish && git push --follow-tags --no-verify",
     "release-patch": "VER=patch npm run release",
