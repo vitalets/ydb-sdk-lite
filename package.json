@@ -14,7 +14,7 @@
     "test": "mocha -r ts-node/register test/globals.ts test/specs/*.ts",
     "build": "rm -rf dist && tsc",
     "update-proto": "cp -R node_modules/ydb-sdk/proto ./proto",
-    "release": "npm run lint && npm t && npm version $VER && npm publish && git push --follow-tags --no-verify",
+    "release": "npm run lint && npm t && npm run build && npm version $VER && npm publish && git push --follow-tags --no-verify",
     "release-patch": "VER=patch npm run release",
     "release-minor": "VER=minor npm run release"
   },
