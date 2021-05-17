@@ -15,36 +15,24 @@ npm i ydb-sdk-lite
 ```
 
 ## Usage
+Usage in serverless function:
 ```js
 const { Ydb } = require('ydb-sdk-lite');
 
-const dbName = process.env.YDB_NAME;
+const ydb = new Ydb({ dbName: 'xxx', iamToken: 'yyy' });
+const [ users ] = await ydb.executeQuery('select * from users');
 
-let ydb;
-
-exports.handler = async (event, ctx) => {
-  // get iam token
-  const iamToken = context.token?.access_token;
-
-  // create ydb instance
-  ydb = ydb || new Ydb({ dbName, iamToken });
-
-  // execute yql query
-  const query = 'select * from users';
-  const [ users ] = await ydb.executeQuery(query);
-  console.log(users);
+console.log(users);
   /*
    [
      {id: 1, name: 'Alice', created_at: Date('')},
      ...
    ]
   */
-
-  // ...
-};
 ```
 
 ## API Reference
+tbd
 
 ## License
 MIT @ [Vitaliy Potapov](https://github.com/vitalets)
