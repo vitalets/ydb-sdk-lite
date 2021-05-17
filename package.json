@@ -1,7 +1,7 @@
 {
   "name": "ydb-sdk-lite",
   "description": "Lightweight implementation of Yandex Database SDK for Node.js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist/cjs/index.js",
   "exports": {
     "import": "./dist/esm/index.js",
