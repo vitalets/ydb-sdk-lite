@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "dist/esm",
     "declaration": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
