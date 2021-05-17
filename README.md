@@ -3,8 +3,16 @@ Lightweight implementation of [ydb-sdk](https://github.com/yandex-cloud/ydb-node
 Mainly for usage in serverless functions.
 
 ## Comparison
+|   | ydb-sdk-lite  | ydb-sdk |
+| - | - | - |
+| require time | ~30ms  | ~300ms  |
+| size | tbd  | tbd  |
+| parameters support | no  | yes  |
 
 ## Installation
+```
+npm i ydb-sdk-lite
+```
 
 ## Usage
 ```js
