@@ -2,6 +2,7 @@
  * Ydb.
  */
 import { Grpc, GrpcOptions } from './grpc';
+import { SessionPool } from './session-pool';
 import { Session } from './session';
 import { YqlQuery } from './query/yql-query';
 
@@ -12,11 +13,12 @@ type YdbOptions = GrpcOptions & {
 export class Ydb {
   private grpc: Grpc;
   private tablePathPrefix: string;
-  private sessions: Session[] = [];
+  private sessionPool: SessionPool;
 
   constructor({ endpoint, dbName, iamToken, tablePathPrefix }: YdbOptions) {
     this.grpc = new Grpc({ endpoint, dbName, iamToken });
     this.tablePathPrefix = this.buildTablePathPrefix(tablePathPrefix);
+    this.sessionPool = new SessionPool(this.grpc, this.tablePathPrefix);
   }
 
   get endpoint() {
@@ -43,35 +45,14 @@ export class Ydb {
 
   /**
    * Run function with session, allowing to execute prepared queries.
+   * todo: is it possible to infer parameters from SessionPool.prototype.withSession?
    */
-  async withSession<T>(fn: (session: Session) => T) {
-    const session = await this.takeSession();
-    session.busy = true;
-    try {
-      return await fn(session);
-    } finally {
-      session.busy = false;
-    }
+   async withSession<T>(fn: (session: Session) => T) {
+    return this.sessionPool.withSession<T>(fn);
   }
 
   async destroy() {
-    await Promise.all(this.sessions.map(session => this.destroySession(session)));
-  }
-
-  private async takeSession() {
-    return this.sessions.find(session => !session.busy) || (await this.createSession());
-  }
-
-  private async createSession() {
-    const session = new Session(this.grpc, this.tablePathPrefix);
-    await session.init();
-    this.sessions.push(session);
-    return session;
-  }
-
-  private async destroySession(session: Session) {
-    this.sessions = this.sessions.filter(s => s !== session);
-    await session.destroy();
+    await this.sessionPool.destroy();
   }
 
   private buildTablePathPrefix(tablePathPrefix?: string) {
