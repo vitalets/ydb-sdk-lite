@@ -16,7 +16,7 @@ const ExecuteQueryResult = Ydb.Table.ExecuteQueryResult;
 
 export const AUTO_TX_RW: ITransactionControl = {
   beginTx: {
-      serializableReadWrite: {}
+    serializableReadWrite: {}
   },
   commitTx: true
 };

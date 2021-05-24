@@ -78,10 +78,10 @@ export function getOperationPayload(response: GrpcResponse): Uint8Array {
     YdbError.checkStatus(operation);
     const value = operation?.result?.value;
     if (!value) {
-        throw new MissingValue('Missing operation result value!');
+      throw new MissingValue('Missing operation result value!');
     }
     return value;
   } else {
-      throw new MissingOperation('No operation in response!');
+    throw new MissingOperation('No operation in response!');
   }
 }

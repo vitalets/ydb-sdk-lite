@@ -72,8 +72,8 @@ function extractValue(ydbValue: IValue) {
   }
   const value = ydbValue[primitiveProp];
   switch (primitiveProp) {
-    case 'bytesValue': return Buffer.from(value as string, 'base64').toString();
-    case 'nullFlagValue': return null;
-    default: return value;
+  case 'bytesValue': return Buffer.from(value as string, 'base64').toString();
+  case 'nullFlagValue': return null;
+  default: return value;
   }
 }

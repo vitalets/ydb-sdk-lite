@@ -38,32 +38,32 @@ export enum StatusCode {
 }
 
 export class YdbError extends Error {
-    static formatIssues(issues?: null | unknown[]) {
-        return issues ? JSON.stringify(issues, null, 2) : '';
-    }
+  static formatIssues(issues?: null | unknown[]) {
+    return issues ? JSON.stringify(issues, null, 2) : '';
+  }
 
-    static checkStatus(operation: IOperation) {
-        if (!operation.status) {
-            throw new MissingStatus('Missing status!');
-        }
-        const status = operation.status as unknown as StatusCode;
-        if (operation.status && !SUCCESS_CODES.has(status)) {
-            const ErrCls = SERVER_SIDE_ERROR_CODES.get(status);
-
-            if (!ErrCls) {
-                throw new Error(`Unexpected status code ${status}!`);
-            } else {
-                throw new ErrCls(`${ErrCls.name}: ${YdbError.formatIssues(operation.issues)}`, operation.issues);
-            }
-        }
+  static checkStatus(operation: IOperation) {
+    if (!operation.status) {
+      throw new MissingStatus('Missing status!');
     }
+    const status = operation.status as unknown as StatusCode;
+    if (operation.status && !SUCCESS_CODES.has(status)) {
+      const ErrCls = SERVER_SIDE_ERROR_CODES.get(status);
+
+      if (!ErrCls) {
+        throw new Error(`Unexpected status code ${status}!`);
+      } else {
+        throw new ErrCls(`${ErrCls.name}: ${YdbError.formatIssues(operation.issues)}`, operation.issues);
+      }
+    }
+  }
 
     static status = StatusCode.STATUS_CODE_UNSPECIFIED;
     public issues: unknown[] | null;
 
     constructor(message: string, issues: null | unknown[] = []) {
-        super(message);
-        this.issues = issues;
+      super(message);
+      this.issues = issues;
     }
 }
 
@@ -162,29 +162,29 @@ export class SessionBusy extends YdbError {
 }
 
 const SUCCESS_CODES = new Set([
-    StatusCode.STATUS_CODE_UNSPECIFIED,
-    StatusCode.SUCCESS
+  StatusCode.STATUS_CODE_UNSPECIFIED,
+  StatusCode.SUCCESS
 ]);
 
 const SERVER_SIDE_ERROR_CODES = new Map([
-    [StatusCode.BAD_REQUEST, BadRequest],
-    [StatusCode.UNAUTHORIZED, Unauthorized],
-    [StatusCode.INTERNAL_ERROR, InternalError],
-    [StatusCode.ABORTED, Aborted],
-    [StatusCode.UNAVAILABLE, Unavailable],
-    [StatusCode.OVERLOADED, Overloaded],
-    [StatusCode.SCHEME_ERROR, SchemeError],
-    [StatusCode.GENERIC_ERROR, GenericError],
-    [StatusCode.TIMEOUT, Timeout],
-    [StatusCode.BAD_SESSION, BadSession],
-    [StatusCode.PRECONDITION_FAILED, PreconditionFailed],
-    [StatusCode.ALREADY_EXISTS, AlreadyExists],
-    [StatusCode.NOT_FOUND, NotFound],
-    [StatusCode.SESSION_EXPIRED, SessionExpired],
-    [StatusCode.CANCELLED, Cancelled],
-    [StatusCode.UNDETERMINED, Undetermined],
-    [StatusCode.UNSUPPORTED, Unsupported],
-    [StatusCode.SESSION_BUSY, SessionBusy],
+  [StatusCode.BAD_REQUEST, BadRequest],
+  [StatusCode.UNAUTHORIZED, Unauthorized],
+  [StatusCode.INTERNAL_ERROR, InternalError],
+  [StatusCode.ABORTED, Aborted],
+  [StatusCode.UNAVAILABLE, Unavailable],
+  [StatusCode.OVERLOADED, Overloaded],
+  [StatusCode.SCHEME_ERROR, SchemeError],
+  [StatusCode.GENERIC_ERROR, GenericError],
+  [StatusCode.TIMEOUT, Timeout],
+  [StatusCode.BAD_SESSION, BadSession],
+  [StatusCode.PRECONDITION_FAILED, PreconditionFailed],
+  [StatusCode.ALREADY_EXISTS, AlreadyExists],
+  [StatusCode.NOT_FOUND, NotFound],
+  [StatusCode.SESSION_EXPIRED, SessionExpired],
+  [StatusCode.CANCELLED, Cancelled],
+  [StatusCode.UNDETERMINED, Undetermined],
+  [StatusCode.UNSUPPORTED, Unsupported],
+  [StatusCode.SESSION_BUSY, SessionBusy],
 ]);
 
 export class MissingOperation extends YdbError {}

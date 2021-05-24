@@ -25,8 +25,8 @@ export class Session {
 
   async destroy() {
     try {
-    const response = await this.grpc.tableService.deleteSession({ sessionId: this.sessionId });
-    return getOperationPayload(response);
+      const response = await this.grpc.tableService.deleteSession({ sessionId: this.sessionId });
+      return getOperationPayload(response);
     } catch (e) {
       // ignore session destroy error
     }

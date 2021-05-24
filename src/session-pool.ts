@@ -15,6 +15,9 @@ export class SessionPool {
   async withSession<T>(fn: (session: Session) => T) {
     const session = await this.takeSession();
     session.busy = true;
+    // todo: handle busy session
+    // todo: handle bad session
+    // todo: handle expired session
     try {
       return await fn(session);
     } finally {

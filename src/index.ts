@@ -47,7 +47,7 @@ export class Ydb {
    * Run function with session, allowing to execute prepared queries.
    * todo: is it possible to infer parameters from SessionPool.prototype.withSession?
    */
-   async withSession<T>(fn: (session: Session) => T) {
+  async withSession<T>(fn: (session: Session) => T) {
     return this.sessionPool.withSession<T>(fn);
   }
 
