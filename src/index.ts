@@ -4,6 +4,7 @@
 import { Grpc, GrpcOptions } from './grpc';
 import { SessionPool } from './session-pool';
 import { Session } from './session';
+import { AUTO_TX_RW, AUTO_TX_RO } from './query/data-query';
 import { YqlQuery } from './query/yql-query';
 
 type YdbOptions = GrpcOptions & {
@@ -11,6 +12,9 @@ type YdbOptions = GrpcOptions & {
 }
 
 export class Ydb {
+  public static AUTO_TX_RW = AUTO_TX_RW;
+  public static AUTO_TX_RO = AUTO_TX_RO;
+
   private grpc: Grpc;
   private tablePathPrefix: string;
   private sessionPool: SessionPool;

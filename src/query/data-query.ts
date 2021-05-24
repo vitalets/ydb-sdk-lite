@@ -1,9 +1,12 @@
 /**
  * Execute data query via table service.
  */
+import Debug from 'debug';
 import { Grpc, getOperationPayload } from '../grpc';
 import { Ydb } from '../../proto/bundle';
 import { IQueryParams, addTablePathPrefix, convertResultToJs } from './helpers';
+
+const debug = Debug('ydb-sdk-lite:query');
 
 type IPrepareQueryResult = Ydb.Table.IPrepareQueryResult;
 type ITransactionControl = Ydb.Table.ITransactionControl;
@@ -50,6 +53,7 @@ export class DataQuery {
       queryCachePolicy,
     };
 
+    debug.enabled && debug(`Executing query: ${query.yqlText || query.id}`);
     const response = await this.grpc.tableService.executeDataQuery(request);
     const payload = getOperationPayload(response);
     const result = ExecuteQueryResult.decode(payload);

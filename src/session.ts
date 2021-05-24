@@ -1,14 +1,17 @@
 /**
  * Session.
  */
+import Debug from 'debug';
 import { Grpc, getOperationPayload } from './grpc';
+import { YdbError } from './errors';
 import { Ydb } from '../proto/bundle';
 import { DataQuery } from './query/data-query';
 
+const debug = Debug('ydb-sdk-lite:session');
 const CreateSessionResult = Ydb.Table.CreateSessionResult;
 
 export class Session {
-  private sessionId!: string;
+  sessionId!: string;
   busy = false;
 
   constructor(private grpc: Grpc, private tablePathPrefix: string) { }
@@ -17,6 +20,7 @@ export class Session {
     const response = await this.grpc.tableService.createSession({});
     const payload = getOperationPayload(response);
     this.sessionId = CreateSessionResult.decode(payload).sessionId;
+    debug(`Session created: ${this.sessionId}`);
   }
 
   async executeQuery(...args: Parameters<typeof DataQuery.prototype.execute>) {
@@ -26,9 +30,10 @@ export class Session {
   async destroy() {
     try {
       const response = await this.grpc.tableService.deleteSession({ sessionId: this.sessionId });
-      return getOperationPayload(response);
+      YdbError.checkStatus(response!.operation!);
+      debug(`Session destroyed: ${this.sessionId}`);
     } catch (e) {
-      // ignore session destroy error
+      debug(e);
     }
   }
 }

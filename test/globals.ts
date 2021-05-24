@@ -7,10 +7,12 @@ const oauthToken = process.env.YC_OAUTH_TOKEN!;
 const dbName = process.env.YDB_NAME!;
 
 type AssertType = typeof assert;
+type YdbType = typeof Ydb;
 
 declare global {
   const assert: AssertType;
   const ydb: Ydb;
+  const Ydb: YdbType;
 }
 
 const tablePathPrefix = 'test';
@@ -22,6 +24,7 @@ before(async () => {
   Object.assign(global, {
     assert,
     ydb,
+    Ydb,
   });
 
   await dropTableUsers();
