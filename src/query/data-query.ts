@@ -14,9 +14,18 @@ type IQuery = Ydb.Table.IQuery;
 type IExecuteDataQueryRequest = Ydb.Table.IExecuteDataQueryRequest;
 const ExecuteQueryResult = Ydb.Table.ExecuteQueryResult;
 
-const AUTO_TX: ITransactionControl = {
+export const AUTO_TX_RW: ITransactionControl = {
   beginTx: {
       serializableReadWrite: {}
+  },
+  commitTx: true
+};
+
+export const AUTO_TX_RO: ITransactionControl = {
+  beginTx: {
+    onlineReadOnly: {
+      allowInconsistentReads:false
+    }
   },
   commitTx: true
 };
@@ -27,7 +36,7 @@ export class DataQuery {
   async execute(
     inputQuery: IPrepareQueryResult | string,
     parameters: IQueryParams = {},
-    txControl: ITransactionControl = AUTO_TX,
+    txControl: ITransactionControl = AUTO_TX_RW,
     operationParams?: IOperationParams,
     queryCachePolicy?: IQueryCachePolicy
   ) {
