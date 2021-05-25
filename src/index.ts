@@ -11,6 +11,8 @@ type YdbOptions = GrpcOptions & {
   tablePathPrefix?: string;
 }
 
+type DropFirst<T extends unknown[]> = T extends [unknown, ...infer U] ? U : never
+
 export class Ydb {
   public static AUTO_TX_RW = AUTO_TX_RW;
   public static AUTO_TX_RO = AUTO_TX_RO;
@@ -45,6 +47,14 @@ export class Ydb {
    */
   async executeYql(...args: Parameters<typeof YqlQuery.prototype.execute>) {
     return new YqlQuery(this.grpc, this.tablePathPrefix).execute(...args);
+  }
+
+  /**
+   * Execute data query via table service.
+   * Shortcut for `ydb.withSession(session => session.executeQuery(...))`.
+   */
+  async executeDataQuery(query: string, ...args: DropFirst<Parameters<typeof Session.prototype.executeQuery>>) {
+    return this.withSession(session => session.executeQuery(query, ...args));
   }
 
   /**

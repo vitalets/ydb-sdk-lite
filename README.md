@@ -20,7 +20,7 @@ Usage in serverless function:
 const { Ydb } = require('ydb-sdk-lite');
 
 const ydb = new Ydb({ dbName: 'xxx', iamToken: 'yyy' });
-const [ users ] = await ydb.executeQuery('select * from users');
+const [ users ] = await ydb.executeDataQuery('select * from users');
 
 console.log(users);
   /*

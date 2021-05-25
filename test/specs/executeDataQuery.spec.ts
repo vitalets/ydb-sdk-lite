@@ -1,15 +1,15 @@
-describe('executeQuery', () => {
+describe('executeDataQuery', () => {
 
   it('upsert and select data', async () => {
     const userId = String(Date.now());
 
-    await ydb.withSession(session => session.executeQuery(`
+    await ydb.executeDataQuery(`
       UPSERT INTO users (id, name, isAdmin, createdAt)
       VALUES ("${userId}", "Alice", true, Datetime("2021-04-17T09:48:19Z"))
-    `));
+    `);
 
     const query = `SELECT id, name, isAdmin, createdAt FROM users WHERE id = "${userId}"`;
-    const [ rows ] = await ydb.withSession(session => session.executeQuery(query, {}, Ydb.AUTO_TX_RO ));
+    const [ rows ] = await ydb.executeDataQuery(query, {}, Ydb.AUTO_TX_RO);
 
     assert.deepEqual(rows, [{
       id: userId,
@@ -22,10 +22,10 @@ describe('executeQuery', () => {
   it('error on upsert in read-only transaction', async () => {
     const userId = String(Date.now());
 
-    const promise = ydb.withSession(session => session.executeQuery(`
+    const promise = ydb.executeDataQuery(`
       UPSERT INTO users (id, name, isAdmin, createdAt)
       VALUES ("${userId}", "Alice", true, Datetime("2021-04-17T09:48:19Z"))
-    `, {}, Ydb.AUTO_TX_RO));
+    `, {}, Ydb.AUTO_TX_RO);
 
     await assert.rejects(promise, /Operation 'Upsert' can't be performed in read only transaction/);
   });
