@@ -6,6 +6,8 @@ import { SessionPool } from './session-pool';
 import { Session } from './session';
 import { AUTO_TX_RW, AUTO_TX_RO } from './query/data-query';
 import { YqlQuery } from './query/yql-query';
+import { buildTypedValue } from './converter/js-to-ydb';
+import { Ydb as ProtoYdb} from '../proto/bundle';
 
 type YdbOptions = GrpcOptions & {
   tablePathPrefix?: string;
@@ -16,6 +18,8 @@ type DropFirst<T extends unknown[]> = T extends [unknown, ...infer U] ? U : neve
 export class Ydb {
   public static AUTO_TX_RW = AUTO_TX_RW;
   public static AUTO_TX_RO = AUTO_TX_RO;
+  public static typedValue = buildTypedValue;
+  public static PrimitiveTypeId = ProtoYdb.Type.PrimitiveTypeId;
 
   private grpc: Grpc;
   private tablePathPrefix: string;

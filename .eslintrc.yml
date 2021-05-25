@@ -12,7 +12,7 @@ env:
   es2020: true
 
 rules:
-  indent: [error, 2]
+  indent: [error, 2, { SwitchCase: 1 }]
   no-console: error
   complexity: [error, { max: 6 }]
   max-depth: [error, { max: 2 }]

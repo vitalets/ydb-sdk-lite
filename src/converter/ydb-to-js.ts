@@ -2,29 +2,11 @@
  * Convertion from ydb types to js.
  */
 import { Ydb } from '../../proto/bundle';
+import { ydbValueToDate } from './date';
 
 type IResultSet = Ydb.IResultSet;
 type IValue = Ydb.IValue;
 type IColumn = Ydb.IColumn;
-type PrimitiveTypeId = Ydb.Type.PrimitiveTypeId;
-
-const {
-  DATE,
-  DATETIME,
-  TIMESTAMP,
-  TZ_DATE,
-  TZ_DATETIME,
-  TZ_TIMESTAMP,
-} = Ydb.Type.PrimitiveTypeId;
-
-const dateBuilders: Partial<Record<PrimitiveTypeId, (value: number | string) => Date>> = {
-  [DATE]: value => new Date((value as number) * 3600 * 1000 * 24),
-  [DATETIME]: value => new Date((value as number) * 1000),
-  [TIMESTAMP]: value => new Date((value as number) / 1000),
-  [TZ_DATE]: value => new Date(value as string),
-  [TZ_DATETIME]: value => new Date(value as string),
-  [TZ_TIMESTAMP]: value => new Date(value as string),
-};
 
 export function resultSetToJs(resultSet: IResultSet) {
   const rows = resultSet.rows || [];
@@ -49,9 +31,9 @@ function valueToJs(ydbValue: IValue, column: IColumn) {
     return null;
   }
   const typeId = getColumnTypeId(column);
-  const dateBuilder = dateBuilders[typeId];
-  return dateBuilder
-    ? dateBuilder(value as number | string)
+  const dateConverter = ydbValueToDate[typeId];
+  return dateConverter
+    ? dateConverter(value as number | string)
     : value;
 }
 
@@ -66,14 +48,14 @@ function getColumnTypeId(column: IColumn) {
 
 function extractValue(ydbValue: IValue) {
   const nonPrimitiveProps = ['items', 'pairs', 'nestedValue'];
-  const primitiveProp = Object.keys(ydbValue).find(key => !nonPrimitiveProps.includes(key)) as keyof Ydb.IValue;
-  if (!primitiveProp) {
+  const propName = Object.keys(ydbValue).find(key => !nonPrimitiveProps.includes(key)) as keyof Ydb.IValue;
+  if (!propName) {
     throw new Error(`Expected a primitive value, got ${ydbValue}!`);
   }
-  const value = ydbValue[primitiveProp];
-  switch (primitiveProp) {
-  case 'bytesValue': return Buffer.from(value as string, 'base64').toString();
-  case 'nullFlagValue': return null;
-  default: return value;
+  const value = ydbValue[propName];
+  switch (propName) {
+    case 'bytesValue': return Buffer.from(value as string, 'base64').toString();
+    case 'nullFlagValue': return null;
+    default: return value;
   }
 }
