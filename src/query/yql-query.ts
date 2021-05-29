@@ -3,7 +3,7 @@
  */
 import { Grpc, getOperationPayload } from '../grpc';
 import { Ydb } from '../../proto/bundle';
-import { IQueryParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './helpers';
+import { IQueryParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './common';
 
 type IExecuteYqlRequest = Ydb.Scripting.IExecuteYqlRequest;
 const ExecuteYqlResult = Ydb.Scripting.ExecuteYqlResult;

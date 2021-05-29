@@ -4,7 +4,7 @@
 import Debug from 'debug';
 import { Grpc, getOperationPayload } from '../grpc';
 import { Ydb } from '../../proto/bundle';
-import { IQueryParams, IQueryTypedParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './helpers';
+import { IQueryParams, IQueryTypedParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './common';
 
 const debug = Debug('ydb-sdk-lite:query');
 
