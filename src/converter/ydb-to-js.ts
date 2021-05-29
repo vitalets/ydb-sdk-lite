@@ -1,8 +1,10 @@
 /**
  * Convertion from ydb types to js.
  */
+import Long from 'long';
 import { Ydb } from '../../proto/bundle';
-import { ydbValueToDate } from './date';
+import { convertToDateObjectIfNeeded } from './date';
+import { longToBigInt } from './bigint';
 
 type IResultSet = Ydb.IResultSet;
 type IValue = Ydb.IValue;
@@ -31,10 +33,7 @@ function valueToJs(ydbValue: IValue, column: IColumn) {
     return null;
   }
   const typeId = getColumnTypeId(column);
-  const dateConverter = ydbValueToDate[typeId];
-  return dateConverter
-    ? dateConverter(value as number | string)
-    : value;
+  return convertToDateObjectIfNeeded(typeId, value);
 }
 
 function getColumnTypeId(column: IColumn) {
@@ -53,8 +52,14 @@ function extractValue(ydbValue: IValue) {
     throw new Error(`Expected a primitive value, got ${ydbValue}!`);
   }
   const value = ydbValue[propName];
+  return transformValueByPropName(propName, value);
+}
+
+function transformValueByPropName(propName: string, value: unknown) {
   switch (propName) {
     case 'bytesValue': return Buffer.from(value as string, 'base64').toString();
+    case 'int64Value': return longToBigInt(value as Long);
+    case 'uint64Value': return longToBigInt(value as Long);
     case 'nullFlagValue': return null;
     default: return value;
   }

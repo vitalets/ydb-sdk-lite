@@ -19,16 +19,21 @@ Usage in serverless function:
 ```js
 const { Ydb } = require('ydb-sdk-lite');
 
-const ydb = new Ydb({ dbName: 'xxx', iamToken: 'yyy' });
-const [ users ] = await ydb.executeDataQuery('select * from users');
+// create Ydb client
+const ydb = new Ydb({ dbName: 'xxx', iamToken: 'yyy', tablePathPrefix: 'zzz' });
 
-console.log(users);
-  /*
-   [
-     {id: 1, name: 'Alice', created_at: Date('')},
-     ...
-   ]
-  */
+// execute single query (DML only)
+const [ users ] = await ydb.executeDataQuery('SELECT * FROM users');
+
+// execute single query with params
+const query = `
+  DECLARE $userId AS int32;
+  SELECT * FROM users WHERE userId = $userId;
+`;
+const [ users ] = await ydb.executeDataQuery(query, { $userId: 42 });
+
+// execute any YQL (DDL + DML)
+const [ users ] = await ydb.executeYql('DROP TABLE users');
 ```
 
 ## API Reference

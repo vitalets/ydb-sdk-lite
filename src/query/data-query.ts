@@ -4,7 +4,7 @@
 import Debug from 'debug';
 import { Grpc, getOperationPayload } from '../grpc';
 import { Ydb } from '../../proto/bundle';
-import { IQueryParams, addTablePathPrefix, convertResultToJs } from './helpers';
+import { IQueryParams, IQueryTypedParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './helpers';
 
 const debug = Debug('ydb-sdk-lite:query');
 
@@ -47,7 +47,7 @@ export class DataQuery {
     const request: IExecuteDataQueryRequest = {
       sessionId: this.sessionId,
       query,
-      parameters,
+      parameters: this.buildParameters(inputQuery, parameters),
       txControl,
       operationParams,
       queryCachePolicy,
@@ -64,6 +64,12 @@ export class DataQuery {
     return typeof inputQuery === 'string'
       ? { yqlText: addTablePathPrefix(inputQuery, this.tablePathPrefix) }
       : { id: inputQuery.queryId };
+  }
+
+  private buildParameters(inputQuery: IPrepareQueryResult | string, parameters: IQueryParams) {
+    return typeof inputQuery === 'string'
+      ? buildTypedParams(inputQuery, parameters)
+      : parameters as IQueryTypedParams;
   }
 }
 

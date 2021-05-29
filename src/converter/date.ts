@@ -1,6 +1,7 @@
 /**
  * Date types convertion helpers.
  */
+/* eslint-disable complexity */
 import { Ydb } from '../../proto/bundle';
 
 // todo: support INTERVAL
@@ -23,20 +24,26 @@ export const dateTypeToProp: Partial<Record<Ydb.Type.PrimitiveTypeId, string>> =
   [TZ_TIMESTAMP]: 'textValue',
 };
 
-export const ydbValueToDate: Partial<Record<Ydb.Type.PrimitiveTypeId, (value: number | string) => Date>> = {
-  [DATE]: value => new Date((value as number) * 3600 * 1000 * 24),
-  [DATETIME]: value => new Date((value as number) * 1000),
-  [TIMESTAMP]: value => new Date((value as number) / 1000),
-  [TZ_DATE]: value => new Date(value),
-  [TZ_DATETIME]: value => new Date(value),
-  [TZ_TIMESTAMP]: value => new Date(value),
-};
+export function convertToDateObjectIfNeeded(typeId: Ydb.Type.PrimitiveTypeId, value: unknown) {
+  switch (typeId) {
+    case DATE: return new Date((value as number) * 3600 * 1000 * 24);
+    case DATETIME: return new Date((value as number) * 1000);
+    case TIMESTAMP: return new Date(Number((value as bigint) / 1000n));
+    case TZ_DATE: return new Date(value as string);
+    case TZ_DATETIME: return new Date(value as string);
+    case TZ_TIMESTAMP: return new Date(value as string);
+    default: return value;
+  }
+}
 
-export const dateToYdbValue: Partial<Record<Ydb.Type.PrimitiveTypeId, (value: Date) => number | string>> = {
-  [DATE]: value => value.valueOf() / 3600 / 1000 / 24,
-  [DATETIME]: value => value.valueOf() / 1000,
-  [TIMESTAMP]: value => value.valueOf() * 1000,
-  [TZ_DATE]: value => value.toDateString(),
-  [TZ_DATETIME]: value => value.toISOString(),
-  [TZ_TIMESTAMP]: value => value.toISOString(),
-};
+export function convertFromDateObjectIfNeeded(typeId: Ydb.Type.PrimitiveTypeId, value: unknown) {
+  switch (typeId) {
+    case DATE: return (value as Date).valueOf() / 3600 / 1000 / 24;
+    case DATETIME: return (value as Date).valueOf() / 1000;
+    case TIMESTAMP: return BigInt((value as Date | number).valueOf() * 1000);
+    case TZ_DATE: return (value as Date).toDateString();
+    case TZ_DATETIME: return (value as Date).toISOString();
+    case TZ_TIMESTAMP: return (value as Date).toISOString();
+    default: return value;
+  }
+}

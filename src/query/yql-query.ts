@@ -3,7 +3,7 @@
  */
 import { Grpc, getOperationPayload } from '../grpc';
 import { Ydb } from '../../proto/bundle';
-import { IQueryParams, addTablePathPrefix, convertResultToJs } from './helpers';
+import { IQueryParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './helpers';
 
 type IExecuteYqlRequest = Ydb.Scripting.IExecuteYqlRequest;
 const ExecuteYqlResult = Ydb.Scripting.ExecuteYqlResult;
@@ -14,7 +14,7 @@ export class YqlQuery {
   async execute(inputQuery: string, parameters: IQueryParams = {}) {
     const request: IExecuteYqlRequest = {
       script: addTablePathPrefix(inputQuery, this.tablePathPrefix),
-      parameters,
+      parameters: buildTypedParams(inputQuery, parameters),
     };
 
     const response = await this.grpc.scriptingService.executeYql(request);

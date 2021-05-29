@@ -2,12 +2,16 @@
  * Convertion from js types to ydb.
  */
 import { Ydb, google } from '../../proto/bundle';
-import { dateToYdbValue, dateTypeToProp } from './date';
+import { convertFromDateObjectIfNeeded, dateTypeToProp } from './date';
+import { bigIntToLong } from './bigint';
+import { stringifyJsonIfNeeded, JSON_DOCUMENT } from './json';
 
 const NullValue = google.protobuf.NullValue;
 const PrimitiveTypeId = Ydb.Type.PrimitiveTypeId;
 
-const typeToProp: Partial<Record<Ydb.Type.PrimitiveTypeId, string>> = {
+// todo: support DECIMAL
+
+const typeToProp: Partial<Record<Ydb.Type.PrimitiveTypeId | typeof JSON_DOCUMENT, string>> = {
   [PrimitiveTypeId.BOOL]: 'boolValue',
   [PrimitiveTypeId.INT8]: 'int32Value',
   [PrimitiveTypeId.UINT8]: 'uint32Value',
@@ -21,11 +25,13 @@ const typeToProp: Partial<Record<Ydb.Type.PrimitiveTypeId, string>> = {
   [PrimitiveTypeId.DOUBLE]: 'doubleValue',
   [PrimitiveTypeId.STRING]: 'bytesValue',
   [PrimitiveTypeId.UTF8]: 'textValue',
-  [PrimitiveTypeId.YSON]: 'bytesValue',
   [PrimitiveTypeId.JSON]: 'textValue',
+  [JSON_DOCUMENT]: 'textValue',
   [PrimitiveTypeId.UUID]: 'textValue',
   ...dateTypeToProp,
 };
+
+const YDB_NULL_VALUE = { nullFlagValue: NullValue.NULL_VALUE };
 
 export function buildTypedValue(value: unknown, typeId: keyof typeof typeToProp, { nullable = true } = {}) {
   return {
@@ -40,23 +46,27 @@ function buildType(typeId: Ydb.Type.PrimitiveTypeId, nullable: boolean) {
     : { typeId };
 }
 
-// todo: refactor this fn
-//eslint-disable-next-line complexity
 function buildValue(value: unknown, typeId: keyof typeof typeToProp) {
   if (value === null || value === undefined) {
-    return {
-      nullFlagValue: NullValue.NULL_VALUE
-    };
+    return YDB_NULL_VALUE;
   }
   const propName = typeToProp[typeId];
   if (propName === undefined) {
-    throw new Error(`Unsupported type: ${typeId}`);
+    throw new Error(`Unsupported type id: ${typeId}, value: ${value}`);
   }
-  if (propName === 'bytesValue' && typeof value === 'string') {
-    value = Buffer.from(value);
-  }
-  const dateConverter = dateToYdbValue[typeId];
-  value = dateConverter ? dateConverter(value as Date) : value;
 
-  return { [propName]: value };
+  value = stringifyJsonIfNeeded(typeId, value);
+  value = convertFromDateObjectIfNeeded(typeId, value);
+  value = transformValueByPropName(propName, value);
+
+  return { [propName]: value } as Ydb.IValue;
+}
+
+function transformValueByPropName(propName: string, value: unknown) {
+  switch (propName) {
+    case 'bytesValue': return Buffer.from(value as string);
+    case 'int64Value': return bigIntToLong(value as bigint);
+    case 'uint64Value': return bigIntToLong(value as bigint);
+    default: return value;
+  }
 }
