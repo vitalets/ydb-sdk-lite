@@ -15,7 +15,6 @@ npm i ydb-sdk-lite
 ```
 
 ## Usage
-Usage in serverless function:
 ```js
 const { Ydb } = require('ydb-sdk-lite');
 
@@ -33,8 +32,10 @@ const query = `
 const [ users ] = await ydb.executeDataQuery(query, { $userId: 42 });
 
 // execute any YQL (DDL + DML)
-const [ users ] = await ydb.executeYql('DROP TABLE users');
+await ydb.executeYql('DROP TABLE users');
 ```
+
+[Full example](https://github.com/vitalets/ydb-sdk-lite/tree/main/examples/serverless) of using `ydb-sdk-lite` in serverless function.
 
 ## API Reference
 tbd
