@@ -76,6 +76,7 @@ describe('converter', () => {
       DECLARE $dateParam as date;
       DECLARE $datetimeParam as datetime;
       DECLARE $timestampParam as timestamp;
+      DECLARE $timestampParam2 as timestamp;
 
       DECLARE $stringParam as string;
       DECLARE $utf8Param as utf8;
@@ -100,6 +101,7 @@ describe('converter', () => {
         $dateParam as dateCol,
         $datetimeParam as datetimeCol,
         $timestampParam as timestampCol,
+        $timestampParam2 as timestampCol2,
 
         $stringParam as stringCol,
         $utf8Param as utf8Col,
@@ -123,6 +125,7 @@ describe('converter', () => {
       $dateParam: new Date('2021-04-17T09:48:19.123Z'),
       $datetimeParam: new Date('2021-04-17T09:48:19.123Z'),
       $timestampParam: new Date('2021-04-17T09:48:19.123Z'),
+      $timestampParam2: new Date('2021-04-17T09:48:19.123Z').valueOf(),
 
       $stringParam: 'Alice',
       $utf8Param: 'привет',
@@ -148,6 +151,7 @@ describe('converter', () => {
       dateCol: new Date('2021-04-17T00:00:00.000Z'),
       datetimeCol: new Date('2021-04-17T09:48:19Z'),
       timestampCol: new Date('2021-04-17T09:48:19.123Z'),
+      timestampCol2: new Date('2021-04-17T09:48:19.123Z'),
 
       stringCol: 'Alice',
       utf8Col: 'привет',
