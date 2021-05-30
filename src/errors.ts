@@ -38,8 +38,14 @@ export enum StatusCode {
 }
 
 export class YdbError extends Error {
-  static formatIssues(issues?: null | unknown[]) {
-    return issues ? JSON.stringify(issues, null, 2) : '';
+  static formatIssues(issues?: Ydb.Issue.IIssueMessage[] | null, indent = 0) {
+    return (issues || []).map(issue => {
+      const { issueCode, message, issues } = issue;
+      const subIssues: string = issues && issues.length
+        ? `\n${YdbError.formatIssues(issues, indent + 2)}`
+        : '';
+      return `${' '.repeat(indent)}[issueCode: ${issueCode}] ${message}${subIssues}`;
+    }).join('\n');
   }
 
   static checkStatus(operation: IOperation) {

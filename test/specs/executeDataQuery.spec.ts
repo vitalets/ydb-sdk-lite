@@ -30,7 +30,7 @@ describe('executeDataQuery', () => {
       VALUES ("${userId}", "Alice", true, Datetime("2021-04-17T09:48:19Z"))
     `, {}, Ydb.AUTO_TX_RO);
 
-    await assert.rejects(promise, /Operation 'Upsert' can't be performed in read only transaction/);
+    await assert.rejects(promise, /\[issueCode: 2008\] Operation 'Upsert' can't be performed in read only transaction/);
   });
 
   it('cache query on server', async () => {

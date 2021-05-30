@@ -2,12 +2,14 @@
 Lightweight implementation of [ydb-sdk](https://github.com/yandex-cloud/ydb-nodejs-sdk) for Node.js.
 Mainly for usage in serverless functions.
 
-## Comparison
-|   | ydb-sdk-lite  | ydb-sdk |
-| - | - | - |
-| require time | ~100ms  | ~300ms  |
-| size | tbd  | tbd  |
-| parameters support | no  | yes  |
+## Features
+- Fast require time (~100ms)
+- Small size
+- DDL queries support
+- Better errors formatting
+
+## Limitations
+- Only primitive types supported
 
 ## Installation
 ```
