@@ -66,22 +66,23 @@ function removeGrpcProtocol(url: string) {
   return url.replace(/^grpcs?:\/\//, '');
 }
 
-interface GrpcResponse {
+export interface GrpcResponse {
   operation?: (Ydb.Operations.IOperation|null);
 }
 
 export function getOperationPayload(response: GrpcResponse): Uint8Array {
-  const {operation} = response;
+  const { operation } = response;
 
-  if (operation) {
-    //console.log(operation)
-    YdbError.checkStatus(operation);
-    const value = operation?.result?.value;
-    if (!value) {
-      throw new MissingValue('Missing operation result value!');
-    }
-    return value;
-  } else {
+  if (!operation) {
     throw new MissingOperation('No operation in response!');
   }
+
+  YdbError.checkStatus(operation);
+
+  const value = operation.result?.value;
+  if (!value) {
+    throw new MissingValue('Missing operation result value!');
+  }
+
+  return value;
 }

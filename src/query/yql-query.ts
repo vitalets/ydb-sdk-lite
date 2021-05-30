@@ -1,9 +1,18 @@
 /**
  * Execute yql query via scripting service.
  */
-import { Grpc, getOperationPayload } from '../grpc';
+import Debug from 'debug';
+import { Grpc } from '../grpc';
 import { Ydb } from '../../proto/bundle';
-import { IQueryParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './common';
+import {
+  IQueryParams,
+  addTablePathPrefix,
+  convertResultToJs,
+  buildTypedParams,
+  getQueryPayload,
+} from './common';
+
+const debug = Debug('ydb-sdk-lite:yql');
 
 type IExecuteYqlRequest = Ydb.Scripting.IExecuteYqlRequest;
 const ExecuteYqlResult = Ydb.Scripting.ExecuteYqlResult;
@@ -17,8 +26,9 @@ export class YqlQuery {
       parameters: buildTypedParams(inputQuery, parameters),
     };
 
+    debug(`Executing yql query: ${request.script}`);
     const response = await this.grpc.scriptingService.executeYql(request);
-    const payload = getOperationPayload(response);
+    const payload = getQueryPayload(response, request.script!);
     const result = ExecuteYqlResult.decode(payload);
     return convertResultToJs(result);
   }

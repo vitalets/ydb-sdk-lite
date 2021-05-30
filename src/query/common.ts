@@ -1,4 +1,5 @@
 import { Ydb } from '../../proto/bundle';
+import { GrpcResponse, getOperationPayload } from '../grpc';
 import { resultSetToJs } from '../converter/ydb-to-js';
 import { buildTypedValue } from '../converter/js-to-ydb';
 import { inferParamTypesByQuery, InferedTypes } from '../converter/infer';
@@ -20,6 +21,15 @@ export function addTablePathPrefix(query: string, tablePathPrefix: string) {
   return tablePathPrefix
     ? `PRAGMA TablePathPrefix = "${tablePathPrefix}";\n${query}`
     : query;
+}
+
+export function getQueryPayload(response: GrpcResponse, query: string) {
+  try {
+    return getOperationPayload(response);
+  } catch (e) {
+    e.message += `\nQuery: ${truncate(query, 300)}`;
+    throw e;
+  }
 }
 
 export function convertResultToJs({ resultSets }: IQueryResult) {
@@ -47,4 +57,8 @@ function buildTypedParam(value: unknown, types: InferedTypes, key: string) {
   }
   const { typeId, nullable } = type;
   return buildTypedValue(value, typeId, { nullable });
+}
+
+function truncate(str: string, maxLength: number) {
+  return str.length > maxLength ? `${str.substr(0, maxLength)}...` : str;
 }

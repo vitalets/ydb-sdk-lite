@@ -8,8 +8,9 @@ describe('executeYql', () => {
     `);
 
     const [ rows ] = await ydb.executeYql(`
-      SELECT id, name, isAdmin, createdAt FROM users WHERE id = "${userId}"
-    `);
+      DECLARE $userId AS String;
+      SELECT id, name, isAdmin, createdAt FROM users WHERE id = $userId;
+    `, { $userId: userId });
 
     assert.deepEqual(rows, [{
       id: userId,
@@ -19,6 +20,11 @@ describe('executeYql', () => {
     }]);
   });
 
-  // upsert and select data via params
+  it('show formatted issues and query text on error', async () => {
+    const promise = ydb.executeYql(`bla bla bla`);
+
+    await assert.rejects(promise, /\[issueCode: 0\] Unexpected token 'bla'/);
+    await assert.rejects(promise, /Query: PRAGMA TablePathPrefix/);
+  });
 });
 

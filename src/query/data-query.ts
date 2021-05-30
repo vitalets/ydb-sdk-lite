@@ -2,9 +2,16 @@
  * Execute data query via table service.
  */
 import Debug from 'debug';
-import { Grpc, getOperationPayload } from '../grpc';
+import { Grpc } from '../grpc';
 import { Ydb } from '../../proto/bundle';
-import { IQueryParams, IQueryTypedParams, addTablePathPrefix, convertResultToJs, buildTypedParams } from './common';
+import {
+  IQueryParams,
+  IQueryTypedParams,
+  addTablePathPrefix,
+  convertResultToJs,
+  buildTypedParams,
+  getQueryPayload,
+} from './common';
 
 const debug = Debug('ydb-sdk-lite:query');
 
@@ -53,9 +60,9 @@ export class DataQuery {
       queryCachePolicy,
     };
 
-    debug.enabled && debug(`Executing query: ${query.yqlText || query.id}`);
+    debug(`Executing data query: ${query.yqlText || query.id}`);
     const response = await this.grpc.tableService.executeDataQuery(request);
-    const payload = getOperationPayload(response);
+    const payload = getQueryPayload(response, query.yqlText || `id: ${query.id}`);
     const result = ExecuteQueryResult.decode(payload);
     return convertResultToJs(result);
   }
