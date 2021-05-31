@@ -42,5 +42,15 @@ describe('executeDataQuery', () => {
     const [ rows ] = await ydb.executeDataQuery(query, { $userId: 'foo' }, Ydb.AUTO_TX_RO, {}, { keepInCache: true });
     assert.deepEqual(rows, []);
   });
+
+  it('handle bad session: recreate session automatically', async () => {
+    const [ rows ] = await ydb.withSession(async session => {
+      const invalidSessionId = Buffer.from('xxxxxxxx-xxxxxxxx-xxxxxxxx-xxxxxxxx').toString('base64');
+      session.sessionId = `ydb://session/3?node_id=1&id=${invalidSessionId}`;
+      return session.executeQuery('SELECT 1');
+    });
+
+    assert.deepEqual(rows, [{ column0: 1 }]);
+  });
 });
 

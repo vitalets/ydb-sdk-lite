@@ -3,7 +3,7 @@
  */
 import Debug from 'debug';
 import { Grpc, getOperationPayload } from './grpc';
-import { YdbError } from './errors';
+import { YdbError, BadSession } from './errors';
 import { Ydb } from '../proto/bundle';
 import { DataQuery } from './query/data-query';
 
@@ -23,8 +23,17 @@ export class Session {
     debug(`Session created: ${this.sessionId}`);
   }
 
-  async executeQuery(...args: Parameters<typeof DataQuery.prototype.execute>) {
-    return new DataQuery(this.grpc, this.tablePathPrefix, this.sessionId).execute(...args);
+  async executeQuery(...args: Parameters<typeof Session.prototype.executeQueryUnsafe>) {
+    try {
+      return await this.executeQueryUnsafe(...args);
+    } catch (e) {
+      if (e instanceof BadSession) {
+        await this.init(); // repair session by getting new sessionId from server
+        return this.executeQueryUnsafe(...args);
+      } else {
+        throw e;
+      }
+    }
   }
 
   async destroy() {
@@ -35,5 +44,9 @@ export class Session {
     } catch (e) {
       debug(e);
     }
+  }
+
+  private async executeQueryUnsafe(...args: Parameters<typeof DataQuery.prototype.execute>) {
+    return new DataQuery(this.grpc, this.tablePathPrefix, this.sessionId).execute(...args);
   }
 }
