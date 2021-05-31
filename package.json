@@ -11,7 +11,7 @@
   "scripts": {
     "init": "git config core.hooksPath ./.hooks",
     "lint": "eslint src test --ext .ts",
-    "test": "mocha -r ts-node/register test/globals.ts test/specs/*.ts",
+    "test": "mocha -r ts-node/register test/setup.ts test/specs/*.ts",
     "test:d": "DEBUG=ydb-sdk-lite:* npm t",
     "build": "rm -rf dist && tsc",
     "update-proto": "cp -R node_modules/ydb-sdk/proto ./proto",
