@@ -12,7 +12,7 @@ describe('executeDataQuery', () => {
       DECLARE $userId AS String;
       SELECT id, name, isAdmin, createdAt FROM users WHERE id = $userId;
     `;
-    const [ rows ] = await ydb.executeDataQuery(query, { $userId: userId }, Ydb.AUTO_TX_RO);
+    const [ rows ] = await ydb.executeDataQuery(query, { userId }, Ydb.AUTO_TX_RO);
 
     assert.deepEqual(rows, [{
       id: userId,

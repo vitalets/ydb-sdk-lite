@@ -37,17 +37,18 @@ export function convertResultToJs({ resultSets }: IQueryResult) {
 }
 
 export function buildTypedParams(query: string, params: IQueryParams) {
-  const result: IQueryTypedParams = {};
+  const typedParams: IQueryTypedParams = {};
   const keys = Object.keys(params);
   if (keys.length === 0) {
-    return result;
+    return typedParams;
   }
   const types = inferParamTypesByQuery(query);
   keys.forEach(key => {
     const value = params[key];
-    result[key] = value instanceof Ydb.TypedValue ? value : buildTypedParam(value, types, key);
+    key = key.startsWith('$') ? key : `$${key}`;
+    typedParams[key] = value instanceof Ydb.TypedValue ? value : buildTypedParam(value, types, key);
   });
-  return result;
+  return typedParams;
 }
 
 function buildTypedParam(value: unknown, types: InferedTypes, key: string) {

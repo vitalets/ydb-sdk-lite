@@ -1,70 +1,109 @@
+// see: https://cloud.yandex.ru/docs/ydb/yql/reference/builtins/basic#data-type-literals
+// todo: support Interval("P1DT2H") as intervalCol,
+// todo: support Decimal("1.44", 5, 2) as decimalCol,
+
 describe('converter', () => {
 
-  // see: https://cloud.yandex.ru/docs/ydb/yql/reference/builtins/basic#data-type-literals
-  it('ydb to js', async () => {
-    const [ rows ] = await ydb.executeYql(`
+  it('bool', async () => {
+    const query = `
+      DECLARE $trueParam AS bool;
+      DECLARE $falseParam AS bool;
+
       SELECT
         true as trueCol,
-        false as falseCol,
-
-        1 as numCol,
-        Int8("1") as int8Col,
-        Int16("-1") as int16Col,
-        Int32("1") as int32Col,
-        Uint32("1") as uint32Col,
-        Int64("9007199254740993") as int64Col,
-        Uint64("18014398509481982") as uint64Col,
-        Float("1.2") as floatCol,
-        Double("1.3") as doubleCol,
-        --Decimal("1.44", 5, 2) as decimalCol,
-
-        Date("2021-04-17") as dateCol,
-        Datetime("2021-04-17T09:48:19Z") as datetimeCol,
-        Timestamp("2021-04-17T09:48:19.123456Z") as timestampCol,
-        --Interval("P1DT2H") as intervalCol,
-
-        "Alice" as strCol,
-        Utf8("привет") as utf8Col,
-
-        Json(@@{"foo":42}@@) as jsonCol,
-        JsonDocument(@@{"foo":42}@@) as jsonDocumentCol,
-
-        null as nullCol;
-    `);
+        $trueParam AS trueParam,
+        $falseParam AS falseParam;
+    `;
+    const params = {
+      trueParam: true,
+      falseParam: false,
+    };
+    const [ rows ] = await ydb.executeYql(query, params);
 
     assert.deepEqual(rows, [{
       trueCol: true,
-      falseCol: false,
-
-      numCol: 1,
-      int8Col: 1,
-      int16Col: -1,
-      int32Col: 1,
-      uint32Col: 1,
-      int64Col: 9007199254740993n,
-      uint64Col: 18014398509481982n,
-      floatCol: 1.2000000476837158,
-      doubleCol: 1.3,
-
-      strCol: 'Alice',
-      utf8Col: 'привет',
-
-      dateCol: new Date('2021-04-17'),
-      datetimeCol: new Date('2021-04-17T09:48:19Z'),
-      timestampCol: new Date('2021-04-17T09:48:19.123Z'),
-
-      jsonCol: '{"foo":42}',
-      jsonDocumentCol: '{"foo":42}',
-
-      nullCol: null
+      ...params,
     }]);
   });
 
-  // See: https://cloud.yandex.ru/docs/ydb/yql/reference/syntax/declare
-  it('js to ydb', async () => {
-    const [ rows ] = await ydb.executeYql(`
-      DECLARE $trueParam AS bool;
+  it('string', async () => {
+    const query = `
+      DECLARE $stringParam AS string;
+      DECLARE $utf8Param AS utf8;
 
+      SELECT
+        $stringParam AS stringParam,
+        $utf8Param AS utf8Param;
+    `;
+    const params = {
+      stringParam: 'Alice',
+      utf8Param: 'привет',
+    };
+    const [ rows ] = await ydb.executeYql(query, params);
+
+    assert.deepEqual(rows, [ params ]);
+  });
+
+  it('json', async () => {
+    const query = `
+      DECLARE $jsonParam AS json;
+      DECLARE $jsonDocumentParam AS jsonDocument;
+      DECLARE $jsonDocumentParam2 AS jsonDocument;
+
+      SELECT
+        Json(@@{"foo":42}@@) AS jsonCol,
+        $jsonParam AS jsonParam,
+        $jsonDocumentParam AS jsonDocumentParam,
+        $jsonDocumentParam2 AS jsonDocumentParam2;
+    `;
+    const params = {
+      jsonParam: { foo: 42 },
+      jsonDocumentParam: { foo: 42 },
+      jsonDocumentParam2: JSON.stringify({ foo: 42 }),
+    };
+    const [rows] = await ydb.executeYql(query, params);
+
+    assert.deepEqual(rows, [{
+      jsonCol: '{"foo":42}',
+      jsonParam: '{"foo":42}',
+      jsonDocumentParam: '{"foo":42}',
+      jsonDocumentParam2: '{"foo":42}',
+    }]);
+  });
+
+  it('date', async () => {
+    const query = `
+      DECLARE $dateParam AS date;
+      DECLARE $datetimeParam AS datetime;
+      DECLARE $timestampParam AS timestamp;
+      DECLARE $timestampParam2 AS timestamp;
+
+      SELECT
+        Date("2021-04-17") AS dateCol,
+        $dateParam AS dateParam,
+        $datetimeParam AS datetimeParam,
+        $timestampParam AS timestampParam,
+        $timestampParam2 AS timestampParam2;
+    `;
+    const params = {
+      dateParam: new Date('2021-04-17T09:48:19.123Z'),
+      datetimeParam: new Date('2021-04-17T09:48:19.123Z'),
+      timestampParam: new Date('2021-04-17T09:48:19.123Z'),
+      timestampParam2: new Date('2021-04-17T09:48:19.123Z').valueOf(),
+    };
+    const [ rows ] = await ydb.executeYql(query, params);
+
+    assert.deepEqual(rows, [{
+      dateCol: new Date('2021-04-17T00:00:00.000Z'),
+      dateParam: new Date('2021-04-17T00:00:00.000Z'),
+      datetimeParam: new Date('2021-04-17T09:48:19.000Z'),
+      timestampParam: new Date('2021-04-17T09:48:19.123Z'),
+      timestampParam2: new Date('2021-04-17T09:48:19.123Z'),
+    }]);
+  });
+
+  it('number', async () => {
+    const query = `
       DECLARE $uint8Param AS uint8;
       DECLARE $int32Param AS int32;
       DECLARE $uint32Param AS uint32;
@@ -73,96 +112,55 @@ describe('converter', () => {
       DECLARE $floatParam AS float;
       DECLARE $doubleParam AS double;
 
-      DECLARE $dateParam as date;
-      DECLARE $datetimeParam as datetime;
-      DECLARE $timestampParam as timestamp;
-      DECLARE $timestampParam2 as timestamp;
-
-      DECLARE $stringParam as string;
-      DECLARE $utf8Param as utf8;
-
-      DECLARE $jsonParam as json;
-      DECLARE $jsonDocumentParam as jsonDocument;
-      DECLARE $jsonDocumentParam2 as jsonDocument;
-
-      DECLARE $nullParam AS bool?;
-
       SELECT
-        $trueParam as trueCol,
-
-        $uint8Param as uint8Col,
-        $int32Param as int32Col,
-        $uint32Param as uint32Col,
-        $int64Param as int64Col,
-        $uint64Param as uint64Col,
-        $floatParam as floatCol,
-        $doubleParam as doubleCol,
-
-        $dateParam as dateCol,
-        $datetimeParam as datetimeCol,
-        $timestampParam as timestampCol,
-        $timestampParam2 as timestampCol2,
-
-        $stringParam as stringCol,
-        $utf8Param as utf8Col,
-
-        $jsonParam as jsonCol,
-        $jsonDocumentParam as jsonDocumentCol,
-        $jsonDocumentParam2 as jsonDocumentCol2,
-
-        $nullParam as nullCol
-    `, {
-      $trueParam: true,
-
-      $uint8Param: 1,
-      $int32Param: 1,
-      $uint32Param: 1,
-      $int64Param: 9007199254740993n,
-      $uint64Param: 18428729675200069632n,
-      $floatParam: 1.2,
-      $doubleParam: 1.3,
-
-      $dateParam: new Date('2021-04-17T09:48:19.123Z'),
-      $datetimeParam: new Date('2021-04-17T09:48:19.123Z'),
-      $timestampParam: new Date('2021-04-17T09:48:19.123Z'),
-      $timestampParam2: new Date('2021-04-17T09:48:19.123Z').valueOf(),
-
-      $stringParam: 'Alice',
-      $utf8Param: 'привет',
-
-      $jsonParam: { foo: 42 },
-      $jsonDocumentParam: { foo: 42 },
-      $jsonDocumentParam2: JSON.stringify({ foo: 42 }),
-
-      $nullParam: null,
-    });
+        1 AS numCol,
+        $uint8Param AS uint8Param,
+        $int32Param AS int32Param,
+        $uint32Param AS uint32Param,
+        $int64Param AS int64Param,
+        $uint64Param AS uint64Param,
+        $floatParam AS floatParam,
+        $doubleParam AS doubleParam;
+    `;
+    const params = {
+      uint8Param: 1,
+      int32Param: 1,
+      uint32Param: 1,
+      int64Param: 9007199254740993n,
+      uint64Param: 18428729675200069632n,
+      floatParam: 1.2,
+      doubleParam: 1.3,
+    };
+    const [ rows ] = await ydb.executeYql(query, params);
 
     assert.deepEqual(rows, [{
-      trueCol: true,
-
-      uint8Col: 1,
-      int32Col: 1,
-      uint32Col: 1,
-      int64Col: 9007199254740993n,
-      uint64Col: 18428729675200069632n,
-      floatCol: 1.2000000476837158,
-      doubleCol: 1.3,
-
-      dateCol: new Date('2021-04-17T00:00:00.000Z'),
-      datetimeCol: new Date('2021-04-17T09:48:19Z'),
-      timestampCol: new Date('2021-04-17T09:48:19.123Z'),
-      timestampCol2: new Date('2021-04-17T09:48:19.123Z'),
-
-      stringCol: 'Alice',
-      utf8Col: 'привет',
-
-      jsonCol: '{"foo":42}',
-      jsonDocumentCol: '{"foo":42}',
-      jsonDocumentCol2: '{"foo":42}',
-
-      nullCol: null,
+      numCol: 1,
+      ...params,
+      floatParam: 1.2000000476837158, // float does not return the same value..
     }]);
   });
 
+  it('nullable', async () => {
+    const query = `
+      DECLARE $boolParam AS bool?;
+      DECLARE $dateParam AS date?;
+
+      SELECT
+        null AS nullCol,
+        $boolParam AS boolParam,
+        $dateParam AS dateParam;
+    `;
+    const params = {
+      boolParam: null,
+      dateParam: undefined,
+    };
+    const [ rows ] = await ydb.executeYql(query, params);
+
+    assert.deepEqual(rows, [{
+      nullCol: null,
+      boolParam: null,
+      dateParam: null,
+    }]);
+  });
 });
 

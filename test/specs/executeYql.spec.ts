@@ -10,7 +10,7 @@ describe('executeYql', () => {
     const [ rows ] = await ydb.executeYql(`
       DECLARE $userId AS String;
       SELECT id, name, isAdmin, createdAt FROM users WHERE id = $userId;
-    `, { $userId: userId });
+    `, { userId });
 
     assert.deepEqual(rows, [{
       id: userId,
