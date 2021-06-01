@@ -6,7 +6,7 @@ Mainly for usage in serverless functions.
 - Fast require time (~100ms)
 - Small size
 - DDL queries support
-- Better errors formatting
+- Infer parameters type by query text
 
 ## Limitations
 - Only primitive types supported
