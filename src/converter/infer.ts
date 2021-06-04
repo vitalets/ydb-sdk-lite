@@ -2,9 +2,9 @@
  * Infer parameters types by query text.
  */
 import { Ydb } from '../../proto/bundle';
-import { JSON_DOCUMENT } from './json';
 
-const PrimitiveTypeId = Ydb.Type.PrimitiveTypeId;
+// see: https://www.typescriptlang.org/docs/handbook/namespaces.html#aliases
+import PrimitiveTypeId = Ydb.Type.PrimitiveTypeId;
 
 export interface InferedType {
   typeName: string;
@@ -18,7 +18,7 @@ export interface InferedTypes {
 
 // see: https://cloud.yandex.ru/docs/ydb/concepts/datatypes
 // see: https://cloud.yandex.ru/docs/ydb/yql/reference/types/primitive
-const typeNameToId: Record<string, Ydb.Type.PrimitiveTypeId> = {
+const typeNameToId: Record<string, PrimitiveTypeId> = {
   BOOL: PrimitiveTypeId.BOOL,
   INT8: PrimitiveTypeId.INT8,
   UINT8: PrimitiveTypeId.UINT8,
@@ -32,7 +32,7 @@ const typeNameToId: Record<string, Ydb.Type.PrimitiveTypeId> = {
   DOUBLE: PrimitiveTypeId.DOUBLE,
   STRING: PrimitiveTypeId.STRING,
   UTF8: PrimitiveTypeId.UTF8,
-  JSONDOCUMENT: JSON_DOCUMENT,
+  JSONDOCUMENT: PrimitiveTypeId.JSON_DOCUMENT,
   JSON: PrimitiveTypeId.JSON,
   UUID: PrimitiveTypeId.UUID,
   DATE: PrimitiveTypeId.DATE,

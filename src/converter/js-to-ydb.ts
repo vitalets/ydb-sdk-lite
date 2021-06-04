@@ -4,14 +4,14 @@
 import { Ydb, google } from '../../proto/bundle';
 import { convertFromDateObjectIfNeeded, dateTypeToProp } from './date';
 import { bigIntToLong } from './bigint';
-import { stringifyJsonIfNeeded, JSON_DOCUMENT } from './json';
+import { stringifyJsonIfNeeded } from './json';
 
 const NullValue = google.protobuf.NullValue;
 const PrimitiveTypeId = Ydb.Type.PrimitiveTypeId;
 
 // todo: support DECIMAL
 
-const typeToProp: Partial<Record<Ydb.Type.PrimitiveTypeId | typeof JSON_DOCUMENT, string>> = {
+const typeToProp: Partial<Record<Ydb.Type.PrimitiveTypeId, string>> = {
   [PrimitiveTypeId.BOOL]: 'boolValue',
   [PrimitiveTypeId.INT8]: 'int32Value',
   [PrimitiveTypeId.UINT8]: 'uint32Value',
@@ -26,7 +26,7 @@ const typeToProp: Partial<Record<Ydb.Type.PrimitiveTypeId | typeof JSON_DOCUMENT
   [PrimitiveTypeId.STRING]: 'bytesValue',
   [PrimitiveTypeId.UTF8]: 'textValue',
   [PrimitiveTypeId.JSON]: 'textValue',
-  [JSON_DOCUMENT]: 'textValue',
+  [PrimitiveTypeId.JSON_DOCUMENT]: 'textValue',
   [PrimitiveTypeId.UUID]: 'textValue',
   ...dateTypeToProp,
 };
