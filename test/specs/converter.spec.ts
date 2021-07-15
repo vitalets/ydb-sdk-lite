@@ -52,6 +52,7 @@ describe('converter', () => {
 
       SELECT
         Json(@@{"foo":42}@@) AS jsonCol,
+        JsonDocument(@@{"foo":42}@@) AS jsonDocumentCol,
         $jsonParam AS jsonParam,
         $jsonDocumentParam AS jsonDocumentParam,
         $jsonDocumentParam2 AS jsonDocumentParam2;
@@ -65,6 +66,7 @@ describe('converter', () => {
 
     assert.deepEqual(rows, [{
       jsonCol: '{"foo":42}',
+      jsonDocumentCol: '{"foo":42}',
       jsonParam: '{"foo":42}',
       jsonDocumentParam: '{"foo":42}',
       jsonDocumentParam2: '{"foo":42}',
