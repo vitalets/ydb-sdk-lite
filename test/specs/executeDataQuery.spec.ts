@@ -31,6 +31,7 @@ describe('executeDataQuery', () => {
     `, {}, Ydb.AUTO_TX_RO);
 
     await assert.rejects(promise, /\[issueCode: 2008\] Operation 'Upsert' can't be performed in read only transaction/);
+    await assert.rejects(promise, /Query: PRAGMA TablePathPrefix/);
     await assert.rejects(promise, /UPSERT INTO users/);
   });
 
