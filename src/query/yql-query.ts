@@ -28,7 +28,7 @@ export class YqlQuery {
 
     debug(`Executing yql query: ${request.script}`);
     const response = await this.grpc.scriptingService.executeYql(request);
-    const payload = getQueryPayload(response, request.script!);
+    const payload = getQueryPayload(response, request.script || '', parameters);
     const result = ExecuteYqlResult.decode(payload);
     return convertResultToJs(result);
   }

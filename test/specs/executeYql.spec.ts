@@ -1,4 +1,5 @@
 describe('executeYql', () => {
+
   it('upsert and select data from table', async () => {
     const userId = String(Date.now());
 
@@ -21,10 +22,10 @@ describe('executeYql', () => {
   });
 
   it('show formatted issues and query text on error', async () => {
-    const promise = ydb.executeYql(`bla bla bla`);
+    const promise = ydb.executeYql(`bla`);
 
     await assert.rejects(promise, /\[issueCode: 0\] Unexpected token 'bla'/);
-    await assert.rejects(promise, /Query: PRAGMA TablePathPrefix/);
+    await assert.rejects(promise, /Query: PRAGMA TablePathPrefix.+bla/s);
   });
 });
 

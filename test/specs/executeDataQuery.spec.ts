@@ -26,13 +26,14 @@ describe('executeDataQuery', () => {
     const userId = String(Date.now());
 
     const promise = ydb.executeDataQuery(`
+      DECLARE $userId AS String;
       UPSERT INTO users (id, name, isAdmin, createdAt)
-      VALUES ("${userId}", "Alice", true, Datetime("2021-04-17T09:48:19Z"))
-    `, {}, Ydb.AUTO_TX_RO);
+      VALUES ($userId, "Alice", true, Datetime("2021-04-17T09:48:19Z"))
+    `, { userId }, Ydb.AUTO_TX_RO);
 
     await assert.rejects(promise, /\[issueCode: 2008\] Operation 'Upsert' can't be performed in read only transaction/);
-    await assert.rejects(promise, /Query: PRAGMA TablePathPrefix/);
-    await assert.rejects(promise, /UPSERT INTO users/);
+    await assert.rejects(promise, /Query: PRAGMA TablePathPrefix .+ UPSERT INTO users/s);
+    await assert.rejects(promise, /Params: {"userId":"\d+"}/);
   });
 
   it('cache query on server', async () => {

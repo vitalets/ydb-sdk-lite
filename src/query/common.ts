@@ -9,6 +9,8 @@ type IExecuteYqlResult = Ydb.Scripting.IExecuteYqlResult;
 
 type IQueryResult = IExecuteQueryResult | IExecuteYqlResult;
 
+const MAX_STRING_OUTPUT = 300;
+
 export interface IQueryParams {
   [k: string]: unknown
 }
@@ -23,13 +25,27 @@ export function addTablePathPrefix(query: string, tablePathPrefix: string) {
     : query;
 }
 
-export function getQueryPayload(response: GrpcResponse, query: string) {
+export function getQueryPayload(
+  response: GrpcResponse,
+  query: string,
+  params: IQueryParams = {}
+) {
   try {
     return getOperationPayload(response);
   } catch (e) {
-    e.message += `\nQuery: ${truncate(query, 300)}`;
+    const queryMsg = `Query: ${truncate(query, MAX_STRING_OUTPUT)}`;
+    const paramsMsg = `Params: ${stringifyQueryParams(params)}`;
+    e.message = [ e.message, queryMsg, paramsMsg ].join('\n');
     throw e;
   }
+}
+
+function stringifyQueryParams(params: IQueryParams) {
+  return JSON.stringify(params, (_, value) => {
+    return typeof value === 'string'
+      ? truncate(value, MAX_STRING_OUTPUT)
+      : value;
+  });
 }
 
 export function convertResultToJs({ resultSets }: IQueryResult) {

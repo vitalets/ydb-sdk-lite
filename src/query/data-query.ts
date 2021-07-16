@@ -60,9 +60,10 @@ export class DataQuery {
       queryCachePolicy,
     };
 
-    debug(`Executing data query: ${query.yqlText || query.id}`);
+    const queryText = query.yqlText || `id: ${query.id}`;
+    debug(`Executing data query: ${queryText}`);
     const response = await this.grpc.tableService.executeDataQuery(request);
-    const payload = getQueryPayload(response, query.yqlText || `id: ${query.id}`);
+    const payload = getQueryPayload(response, queryText, parameters);
     const result = ExecuteQueryResult.decode(payload);
     return convertResultToJs(result);
   }
