@@ -13,7 +13,8 @@ export class SessionPool {
    * Run function with session, allowing to execute prepared queries.
    */
   async withSession<T>(fn: (session: Session) => T) {
-    const session = await this.takeSession();
+    const session = this.sessions.find(session => !session.isBusy()) || (await this.createSession());
+    // It is important to call session.setBusy sinchronously. Otherwise same sesison can be taken.
     session.setBusy(true);
     // todo: handle busy session
     // todo: handle bad session
@@ -27,10 +28,6 @@ export class SessionPool {
 
   async destroy() {
     await Promise.all(this.sessions.map(session => this.destroySession(session)));
-  }
-
-  private async takeSession() {
-    return this.sessions.find(session => !session.isBusy()) || (await this.createSession());
   }
 
   private async createSession() {

@@ -56,6 +56,16 @@ describe('executeDataQuery', () => {
     assert.deepEqual(rows, [{ column0: 1 }]);
   });
 
+  it('simultaneous withSession should not take same session', async () => {
+    const fn = () => ydb.executeDataQuery(`SELECT * FROM users LIMIT 1`, {}, Ydb.AUTO_TX_RO);
+    // create two sessions
+    await Promise.all([ fn(), fn() ]);
+    // run two simultaneous requests over existing sessions
+    const checkFn = () => ydb.withSession(async session => session.sessionId);
+    const [ id1, id2 ] = await Promise.all([ checkFn(), checkFn() ]);
+    assert.notEqual(id1, id2);
+  });
+
   // can emulate in tests
   // it.only('handle busy session: retry', async () => {
   //   const userId = String(Date.now());
