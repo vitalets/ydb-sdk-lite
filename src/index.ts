@@ -8,12 +8,11 @@ import { AUTO_TX_RW, AUTO_TX_RO } from './query/data-query';
 import { YqlQuery } from './query/yql-query';
 import { buildTypedValue } from './converter/js-to-ydb';
 import { Ydb as ProtoYdb} from '../proto/bundle';
+import { DropFirst } from './utils';
 
 type YdbOptions = GrpcOptions & {
   tablePathPrefix?: string;
 }
-
-type DropFirst<T extends unknown[]> = T extends [unknown, ...infer U] ? U : never
 
 export class Ydb {
   public static AUTO_TX_RW = AUTO_TX_RW;
