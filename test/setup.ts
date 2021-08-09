@@ -3,8 +3,9 @@ import { strict as assert } from 'assert';
 import { Session } from 'yandex-cloud';
 import { Ydb } from '../src';
 
-const oauthToken = process.env.YC_OAUTH_TOKEN!;
-const dbName = process.env.YDB_NAME!;
+const oauthToken = process.env.YC_OAUTH_TOKEN || '';
+const dbName = process.env.YDB_NAME || '';
+const tablePathPrefix = process.env.YDB_PATH || '';
 
 type AssertType = typeof assert;
 type YdbType = typeof Ydb;
@@ -14,8 +15,6 @@ declare global {
   const ydb: Ydb;
   const Ydb: YdbType;
 }
-
-const tablePathPrefix = 'test';
 
 before(async () => {
   const iamToken = await getIamToken();
