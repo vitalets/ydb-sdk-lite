@@ -28,7 +28,8 @@ export class Session {
       return await this.executeQueryUnsafe(...args);
     } catch (e) {
       if (e instanceof BadSession) {
-        await this.init(); // repair session by getting new sessionId from server
+        // if session is bad - retry once with new session
+        await this.init();
         return this.executeQueryUnsafe(...args);
       } else {
         throw e;
@@ -46,7 +47,9 @@ export class Session {
     }
   }
 
-  private async executeQueryUnsafe(...args: Parameters<typeof DataQuery.prototype.execute>) {
+  // Keep this method protected, not private because ts does not emit parameters for private methods,
+  // but we use it in executeQuery() declaration.
+  protected async executeQueryUnsafe(...args: Parameters<typeof DataQuery.prototype.execute>) {
     return new DataQuery(this.grpc, this.tablePathPrefix, this.sessionId).execute(...args);
   }
 }
