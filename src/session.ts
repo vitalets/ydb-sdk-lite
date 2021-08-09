@@ -12,7 +12,7 @@ const CreateSessionResult = Ydb.Table.CreateSessionResult;
 
 export class Session {
   sessionId!: string;
-  busy = false;
+  private busy = false;
 
   constructor(private grpc: Grpc, private tablePathPrefix: string) { }
 
@@ -35,6 +35,15 @@ export class Session {
         throw e;
       }
     }
+  }
+
+  setBusy(value: boolean) {
+    this.busy = value;
+    debug(`Session ${value ? 'taken' : 'free'}: ${this.sessionId}`);
+  }
+
+  isBusy() {
+    return this.busy;
   }
 
   async destroy() {

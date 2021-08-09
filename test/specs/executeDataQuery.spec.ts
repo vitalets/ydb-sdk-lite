@@ -55,5 +55,16 @@ describe('executeDataQuery', () => {
 
     assert.deepEqual(rows, [{ column0: 1 }]);
   });
+
+  // can emulate in tests
+  // it.only('handle busy session: retry', async () => {
+  //   const userId = String(Date.now());
+  //   const fn = () => ydb.executeDataQuery(`
+  //     UPSERT INTO users (id, name, isAdmin, createdAt)
+  //     VALUES ("${userId}", "${Math.random()}", true, Datetime("2021-04-17T09:48:19Z"))
+  //   `);
+  //   const res = await Promise.all([ fn(), fn(), fn() ]);
+  //   assert.deepEqual(res, [{ column0: 1 }]);
+  // });
 });
 

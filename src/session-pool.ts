@@ -14,14 +14,14 @@ export class SessionPool {
    */
   async withSession<T>(fn: (session: Session) => T) {
     const session = await this.takeSession();
-    session.busy = true;
+    session.setBusy(true);
     // todo: handle busy session
     // todo: handle bad session
     // todo: handle expired session
     try {
       return await fn(session);
     } finally {
-      session.busy = false;
+      session.setBusy(false);
     }
   }
 
@@ -30,7 +30,7 @@ export class SessionPool {
   }
 
   private async takeSession() {
-    return this.sessions.find(session => !session.busy) || (await this.createSession());
+    return this.sessions.find(session => !session.isBusy()) || (await this.createSession());
   }
 
   private async createSession() {
