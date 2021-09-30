@@ -5,6 +5,7 @@
     "outDir": "dist",
     "declaration": true,
     "strict": true,
+    "useUnknownInCatchVariables": false,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "esModuleInterop": true
