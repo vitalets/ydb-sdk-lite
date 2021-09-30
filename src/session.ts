@@ -3,7 +3,7 @@
  */
 import Debug from 'debug';
 import { Grpc, getOperationPayload } from './grpc';
-import { YdbError, BadSession } from './errors';
+import { YdbError, BadSession, Unavailable } from './errors';
 import { Ydb } from '../proto/bundle';
 import { DataQuery } from './query/data-query';
 
@@ -30,6 +30,11 @@ export class Session {
       if (e instanceof BadSession) {
         // if session is bad - retry once with new session
         await this.init();
+        return this.executeQueryUnsafe(...args);
+      } else if (e instanceof Unavailable) {
+        // if unavailable - retry once the same request
+        // see: https://cloud.yandex.ru/docs/ydb/ydb-sdk/error_handling#termination-statuses
+        // todo: better retry policy
         return this.executeQueryUnsafe(...args);
       } else {
         throw e;
