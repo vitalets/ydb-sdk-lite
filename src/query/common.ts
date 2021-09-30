@@ -3,6 +3,7 @@ import { GrpcResponse, getOperationPayload } from '../grpc';
 import { resultSetToJs } from '../converter/ydb-to-js';
 import { buildTypedValue } from '../converter/js-to-ydb';
 import { inferParamTypesByQuery, InferedTypes } from '../converter/infer';
+import { appendMessageToError } from '../utils';
 
 type IExecuteQueryResult = Ydb.Table.IExecuteQueryResult;
 type IExecuteYqlResult = Ydb.Scripting.IExecuteYqlResult;
@@ -33,9 +34,9 @@ export function getQueryPayload(
   try {
     return getOperationPayload(response);
   } catch (e) {
-    const queryMsg = `Query: ${truncate(query, MAX_STRING_OUTPUT)}`;
-    const paramsMsg = `Params: ${stringifyQueryParams(params)}`;
-    e.message = [ e.message, queryMsg, paramsMsg ].join('\n');
+    const queryMsg = `\nQuery: ${truncate(query, MAX_STRING_OUTPUT)}`;
+    const paramsMsg = `\nParams: ${stringifyQueryParams(params)}`;
+    appendMessageToError(e, `${queryMsg}${paramsMsg}`);
     throw e;
   }
 }
