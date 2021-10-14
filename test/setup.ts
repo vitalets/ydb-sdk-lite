@@ -1,11 +1,7 @@
-import 'dotenv/config';
 import { strict as assert } from 'assert';
 import { Session } from 'yandex-cloud-lite';
 import { Ydb } from '../src';
-
-const oauthToken = process.env.YC_OAUTH_TOKEN || '';
-const dbName = process.env.YDB_NAME || '';
-const tablePathPrefix = process.env.YDB_PATH || '';
+import { YC_OAUTH_TOKEN, YDB_NAME, YDB_PATH } from '../.env';
 
 type AssertType = typeof assert;
 type YdbType = typeof Ydb;
@@ -17,8 +13,8 @@ declare global {
 }
 
 before(async () => {
-  const iamToken = await new Session({ oauthToken }).getIamToken();
-  const ydb = new Ydb({ dbName, iamToken, tablePathPrefix });
+  const iamToken = await new Session({ oauthToken: YC_OAUTH_TOKEN }).getIamToken();
+  const ydb = new Ydb({ dbName: YDB_NAME, iamToken, tablePathPrefix: YDB_PATH });
 
   Object.assign(global, {
     assert,
