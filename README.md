@@ -3,8 +3,8 @@ Lightweight implementation of [ydb-sdk](https://github.com/yandex-cloud/ydb-node
 Mainly for usage in serverless functions.
 
 ## Features
-- Fast require time (~100ms)
-- Small size
+- Fast require time (100ms vs 300ms)
+- Small size (5Mb vs 40Mb)
 - DDL queries support
 - Infer parameters type by query text
 
