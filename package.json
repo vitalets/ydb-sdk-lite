@@ -15,7 +15,8 @@
     "test": "mocha -r ts-node/register test/setup.ts test/specs/*.ts",
     "test:d": "DEBUG=ydb-sdk-lite:* npm t",
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
-    "update-proto": "cp -R node_modules/ydb-sdk/proto/ ./proto",
+    "update-proto": "./scripts/update-proto.sh",
+    "compile-proto": "./scripts/compile-proto.sh",
     "release": "npm run lint && npm t && npm run build && npm version $VER && npm publish && git push --follow-tags --no-verify",
     "release-patch": "VER=patch npm run release",
     "release-minor": "VER=minor npm run release"
@@ -41,8 +42,7 @@
     "mocha": "^9.1.2",
     "ts-node": "^10.3.0",
     "typescript": "^4.4.4",
-    "yandex-cloud": "^1.4.3",
-    "ydb-sdk": "^2.0.1"
+    "yandex-cloud": "^1.4.3"
   },
   "author": {
     "name": "Vitaliy Potapov",
