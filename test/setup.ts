@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { strict as assert } from 'assert';
-import { Session } from 'yandex-cloud';
+import { Session } from 'yandex-cloud-lite';
 import { Ydb } from '../src';
 
 const oauthToken = process.env.YC_OAUTH_TOKEN || '';
@@ -17,7 +17,7 @@ declare global {
 }
 
 before(async () => {
-  const iamToken = await getIamToken();
+  const iamToken = await new Session({ oauthToken }).getIamToken();
   const ydb = new Ydb({ dbName, iamToken, tablePathPrefix });
 
   Object.assign(global, {
@@ -33,11 +33,6 @@ before(async () => {
 afterEach(async () => {
   await ydb.destroy();
 });
-
-async function getIamToken() {
-  const session = new Session({ oauthToken });
-  return (session as any).__tokenCreator(); // eslint-disable-line @typescript-eslint/no-explicit-any
-}
 
 async function dropTableUsers() {
   try {

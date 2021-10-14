@@ -42,7 +42,7 @@
     "mocha": "^9.1.2",
     "ts-node": "^10.3.0",
     "typescript": "^4.4.4",
-    "yandex-cloud": "^1.4.3"
+    "yandex-cloud-lite": "^1.1.4"
   },
   "author": {
     "name": "Vitaliy Potapov",
