@@ -66,6 +66,13 @@ describe('executeDataQuery', () => {
     assert.notEqual(id1, id2);
   });
 
+  it('request timeout', async () => {
+    const query = `SELECT * FROM users`;
+    const operationTimeout = { nanos: 1 };
+    const promise = ydb.executeDataQuery(query, {}, Ydb.AUTO_TX_RO, { operationTimeout });
+    await assert.rejects(promise, /Deadline exceeded during query compilation/);
+  });
+
   // can emulate in tests
   // it.only('handle busy session: retry', async () => {
   //   const userId = String(Date.now());
