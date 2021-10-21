@@ -1,7 +1,7 @@
 import { strict as assert } from 'assert';
 import { Session } from 'yandex-cloud-lite';
 import { Ydb } from '../src';
-import { YC_OAUTH_TOKEN, YDB_NAME, YDB_PATH } from '../.env';
+import { YDB_NAME, YDB_PATH } from '../.env';
 
 type AssertType = typeof assert;
 type YdbType = typeof Ydb;
@@ -13,7 +13,7 @@ declare global {
 }
 
 before(async () => {
-  const iamToken = await new Session({ oauthToken: YC_OAUTH_TOKEN }).getIamToken();
+  const iamToken = await new Session({ authKeyFile: '.auth-key.json' }).getIamToken();
   const ydb = new Ydb({ dbName: YDB_NAME, iamToken, tablePathPrefix: YDB_PATH });
 
   Object.assign(global, {
