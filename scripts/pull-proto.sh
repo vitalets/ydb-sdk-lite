@@ -5,5 +5,5 @@
 set -euo pipefail
 
 wget "https://github.com/ydb-platform/ydb-api-protos/archive/master.zip" -O master.zip
-unzip master.zip
+unzip -o master.zip
 rm -f master.zip
