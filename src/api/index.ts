@@ -3,8 +3,10 @@
  */
 import * as grpc from '@grpc/grpc-js';
 import type { RPCImpl } from 'protobufjs';
-import { Ydb } from '../proto/bundle';
-import { MissingOperation, MissingValue, YdbError } from './errors';
+import { Ydb } from '../../proto/bundle';
+import { GrpcResponse, getOperationPayload } from './payload';
+
+export { GrpcResponse, getOperationPayload };
 
 const TableService = Ydb.Table.V1.TableService;
 const ScriptingService = Ydb.Scripting.V1.ScriptingService;
@@ -100,25 +102,4 @@ function createGrpcClient(endpoint: string) {
 
 function removeGrpcProtocol(url: string) {
   return url.replace(/^grpcs?:\/\//, '');
-}
-
-export interface GrpcResponse {
-  operation?: (Ydb.Operations.IOperation|null);
-}
-
-export function getOperationPayload(response: GrpcResponse): Uint8Array {
-  const { operation } = response;
-
-  if (!operation) {
-    throw new MissingOperation('No operation in response!');
-  }
-
-  YdbError.checkStatus(operation);
-
-  const value = operation.result?.value;
-  if (!value) {
-    throw new MissingValue('Missing operation result value!');
-  }
-
-  return value;
 }

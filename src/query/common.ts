@@ -1,5 +1,5 @@
 import { Ydb } from '../../proto/bundle';
-import { GrpcResponse, getOperationPayload } from '../grpc';
+import { GrpcResponse, getOperationPayload } from '../api';
 import { resultSetToJs } from '../types/ydb-to-js';
 import { buildTypedValue } from '../types/js-to-ydb';
 import { inferParamTypesByQuery, InferedTypes } from '../types/infer';

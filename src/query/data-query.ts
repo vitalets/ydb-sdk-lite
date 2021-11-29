@@ -2,7 +2,7 @@
  * Execute data query via table service.
  */
 import Debug from 'debug';
-import { Grpc } from '../grpc';
+import { Grpc } from '../api';
 import { Ydb } from '../../proto/bundle';
 import {
   IQueryParams,

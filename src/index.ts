@@ -1,7 +1,7 @@
 /**
  * Ydb.
  */
-import { Grpc, GrpcOptions } from './grpc';
+import { Grpc, GrpcOptions } from './api';
 import { SessionPool } from './session-pool';
 import { Session } from './session';
 import { AUTO_TX_RW, AUTO_TX_RO } from './query/data-query';

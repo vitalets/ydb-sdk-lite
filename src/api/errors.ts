@@ -1,6 +1,6 @@
 /* eslint-disable semi */
 
-import { Ydb } from '../proto/bundle';
+import { Ydb } from '../../proto/bundle';
 import ApiStatusCode = Ydb.StatusIds.StatusCode;
 import IOperation = Ydb.Operations.IOperation;
 

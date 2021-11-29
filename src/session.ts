@@ -2,8 +2,8 @@
  * Session.
  */
 import Debug from 'debug';
-import { Grpc, getOperationPayload } from './grpc';
-import { YdbError, BadSession, Unavailable } from './errors';
+import { Grpc, getOperationPayload } from './api';
+import { YdbError, BadSession, Unavailable } from './api/errors';
 import { Ydb } from '../proto/bundle';
 import { DataQuery } from './query/data-query';
 

@@ -1,7 +1,7 @@
 /**
  * Session pool.
  */
-import { Grpc } from './grpc';
+import { Grpc } from './api';
 import { Session } from './session';
 
 export class SessionPool {
