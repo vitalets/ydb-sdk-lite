@@ -17275,6 +17275,764 @@ export namespace Ydb {
             public toJSON(): { [k: string]: any };
         }
     }
+
+    /** Namespace Discovery. */
+    namespace Discovery {
+
+        /** Namespace V1. */
+        namespace V1 {
+
+            /** Represents a DiscoveryService */
+            class DiscoveryService extends $protobuf.rpc.Service {
+
+                /**
+                 * Constructs a new DiscoveryService service.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 */
+                constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+                /**
+                 * Creates new DiscoveryService service using the specified rpc implementation.
+                 * @param rpcImpl RPC implementation
+                 * @param [requestDelimited=false] Whether requests are length-delimited
+                 * @param [responseDelimited=false] Whether responses are length-delimited
+                 * @returns RPC service. Useful where requests and/or responses are streamed.
+                 */
+                public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): DiscoveryService;
+
+                /**
+                 * Calls ListEndpoints.
+                 * @param request ListEndpointsRequest message or plain object
+                 * @param callback Node-style callback called with the error, if any, and ListEndpointsResponse
+                 */
+                public listEndpoints(request: Ydb.Discovery.IListEndpointsRequest, callback: Ydb.Discovery.V1.DiscoveryService.ListEndpointsCallback): void;
+
+                /**
+                 * Calls ListEndpoints.
+                 * @param request ListEndpointsRequest message or plain object
+                 * @returns Promise
+                 */
+                public listEndpoints(request: Ydb.Discovery.IListEndpointsRequest): Promise<Ydb.Discovery.ListEndpointsResponse>;
+
+                /**
+                 * Calls WhoAmI.
+                 * @param request WhoAmIRequest message or plain object
+                 * @param callback Node-style callback called with the error, if any, and WhoAmIResponse
+                 */
+                public whoAmI(request: Ydb.Discovery.IWhoAmIRequest, callback: Ydb.Discovery.V1.DiscoveryService.WhoAmICallback): void;
+
+                /**
+                 * Calls WhoAmI.
+                 * @param request WhoAmIRequest message or plain object
+                 * @returns Promise
+                 */
+                public whoAmI(request: Ydb.Discovery.IWhoAmIRequest): Promise<Ydb.Discovery.WhoAmIResponse>;
+            }
+
+            namespace DiscoveryService {
+
+                /**
+                 * Callback as used by {@link Ydb.Discovery.V1.DiscoveryService#listEndpoints}.
+                 * @param error Error, if any
+                 * @param [response] ListEndpointsResponse
+                 */
+                type ListEndpointsCallback = (error: (Error|null), response?: Ydb.Discovery.ListEndpointsResponse) => void;
+
+                /**
+                 * Callback as used by {@link Ydb.Discovery.V1.DiscoveryService#whoAmI}.
+                 * @param error Error, if any
+                 * @param [response] WhoAmIResponse
+                 */
+                type WhoAmICallback = (error: (Error|null), response?: Ydb.Discovery.WhoAmIResponse) => void;
+            }
+        }
+
+        /** Properties of a ListEndpointsRequest. */
+        interface IListEndpointsRequest {
+
+            /** ListEndpointsRequest database */
+            database?: (string|null);
+
+            /** ListEndpointsRequest service */
+            service?: (string[]|null);
+        }
+
+        /** Represents a ListEndpointsRequest. */
+        class ListEndpointsRequest implements IListEndpointsRequest {
+
+            /**
+             * Constructs a new ListEndpointsRequest.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: Ydb.Discovery.IListEndpointsRequest);
+
+            /** ListEndpointsRequest database. */
+            public database: string;
+
+            /** ListEndpointsRequest service. */
+            public service: string[];
+
+            /**
+             * Creates a new ListEndpointsRequest instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns ListEndpointsRequest instance
+             */
+            public static create(properties?: Ydb.Discovery.IListEndpointsRequest): Ydb.Discovery.ListEndpointsRequest;
+
+            /**
+             * Encodes the specified ListEndpointsRequest message. Does not implicitly {@link Ydb.Discovery.ListEndpointsRequest.verify|verify} messages.
+             * @param message ListEndpointsRequest message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: Ydb.Discovery.IListEndpointsRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified ListEndpointsRequest message, length delimited. Does not implicitly {@link Ydb.Discovery.ListEndpointsRequest.verify|verify} messages.
+             * @param message ListEndpointsRequest message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: Ydb.Discovery.IListEndpointsRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a ListEndpointsRequest message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns ListEndpointsRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Ydb.Discovery.ListEndpointsRequest;
+
+            /**
+             * Decodes a ListEndpointsRequest message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns ListEndpointsRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Ydb.Discovery.ListEndpointsRequest;
+
+            /**
+             * Verifies a ListEndpointsRequest message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a ListEndpointsRequest message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns ListEndpointsRequest
+             */
+            public static fromObject(object: { [k: string]: any }): Ydb.Discovery.ListEndpointsRequest;
+
+            /**
+             * Creates a plain object from a ListEndpointsRequest message. Also converts values to other types if specified.
+             * @param message ListEndpointsRequest
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: Ydb.Discovery.ListEndpointsRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this ListEndpointsRequest to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of an EndpointInfo. */
+        interface IEndpointInfo {
+
+            /** EndpointInfo address */
+            address?: (string|null);
+
+            /** EndpointInfo port */
+            port?: (number|null);
+
+            /** EndpointInfo loadFactor */
+            loadFactor?: (number|null);
+
+            /** EndpointInfo ssl */
+            ssl?: (boolean|null);
+
+            /** EndpointInfo service */
+            service?: (string[]|null);
+
+            /** EndpointInfo location */
+            location?: (string|null);
+
+            /** EndpointInfo nodeId */
+            nodeId?: (number|null);
+        }
+
+        /** Represents an EndpointInfo. */
+        class EndpointInfo implements IEndpointInfo {
+
+            /**
+             * Constructs a new EndpointInfo.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: Ydb.Discovery.IEndpointInfo);
+
+            /** EndpointInfo address. */
+            public address: string;
+
+            /** EndpointInfo port. */
+            public port: number;
+
+            /** EndpointInfo loadFactor. */
+            public loadFactor: number;
+
+            /** EndpointInfo ssl. */
+            public ssl: boolean;
+
+            /** EndpointInfo service. */
+            public service: string[];
+
+            /** EndpointInfo location. */
+            public location: string;
+
+            /** EndpointInfo nodeId. */
+            public nodeId: number;
+
+            /**
+             * Creates a new EndpointInfo instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns EndpointInfo instance
+             */
+            public static create(properties?: Ydb.Discovery.IEndpointInfo): Ydb.Discovery.EndpointInfo;
+
+            /**
+             * Encodes the specified EndpointInfo message. Does not implicitly {@link Ydb.Discovery.EndpointInfo.verify|verify} messages.
+             * @param message EndpointInfo message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: Ydb.Discovery.IEndpointInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified EndpointInfo message, length delimited. Does not implicitly {@link Ydb.Discovery.EndpointInfo.verify|verify} messages.
+             * @param message EndpointInfo message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: Ydb.Discovery.IEndpointInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes an EndpointInfo message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns EndpointInfo
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Ydb.Discovery.EndpointInfo;
+
+            /**
+             * Decodes an EndpointInfo message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns EndpointInfo
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Ydb.Discovery.EndpointInfo;
+
+            /**
+             * Verifies an EndpointInfo message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates an EndpointInfo message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns EndpointInfo
+             */
+            public static fromObject(object: { [k: string]: any }): Ydb.Discovery.EndpointInfo;
+
+            /**
+             * Creates a plain object from an EndpointInfo message. Also converts values to other types if specified.
+             * @param message EndpointInfo
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: Ydb.Discovery.EndpointInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this EndpointInfo to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of a ListEndpointsResult. */
+        interface IListEndpointsResult {
+
+            /** ListEndpointsResult endpoints */
+            endpoints?: (Ydb.Discovery.IEndpointInfo[]|null);
+
+            /** ListEndpointsResult selfLocation */
+            selfLocation?: (string|null);
+        }
+
+        /** Represents a ListEndpointsResult. */
+        class ListEndpointsResult implements IListEndpointsResult {
+
+            /**
+             * Constructs a new ListEndpointsResult.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: Ydb.Discovery.IListEndpointsResult);
+
+            /** ListEndpointsResult endpoints. */
+            public endpoints: Ydb.Discovery.IEndpointInfo[];
+
+            /** ListEndpointsResult selfLocation. */
+            public selfLocation: string;
+
+            /**
+             * Creates a new ListEndpointsResult instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns ListEndpointsResult instance
+             */
+            public static create(properties?: Ydb.Discovery.IListEndpointsResult): Ydb.Discovery.ListEndpointsResult;
+
+            /**
+             * Encodes the specified ListEndpointsResult message. Does not implicitly {@link Ydb.Discovery.ListEndpointsResult.verify|verify} messages.
+             * @param message ListEndpointsResult message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: Ydb.Discovery.IListEndpointsResult, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified ListEndpointsResult message, length delimited. Does not implicitly {@link Ydb.Discovery.ListEndpointsResult.verify|verify} messages.
+             * @param message ListEndpointsResult message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: Ydb.Discovery.IListEndpointsResult, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a ListEndpointsResult message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns ListEndpointsResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Ydb.Discovery.ListEndpointsResult;
+
+            /**
+             * Decodes a ListEndpointsResult message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns ListEndpointsResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Ydb.Discovery.ListEndpointsResult;
+
+            /**
+             * Verifies a ListEndpointsResult message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a ListEndpointsResult message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns ListEndpointsResult
+             */
+            public static fromObject(object: { [k: string]: any }): Ydb.Discovery.ListEndpointsResult;
+
+            /**
+             * Creates a plain object from a ListEndpointsResult message. Also converts values to other types if specified.
+             * @param message ListEndpointsResult
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: Ydb.Discovery.ListEndpointsResult, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this ListEndpointsResult to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of a ListEndpointsResponse. */
+        interface IListEndpointsResponse {
+
+            /** ListEndpointsResponse operation */
+            operation?: (Ydb.Operations.IOperation|null);
+        }
+
+        /** Represents a ListEndpointsResponse. */
+        class ListEndpointsResponse implements IListEndpointsResponse {
+
+            /**
+             * Constructs a new ListEndpointsResponse.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: Ydb.Discovery.IListEndpointsResponse);
+
+            /** ListEndpointsResponse operation. */
+            public operation?: (Ydb.Operations.IOperation|null);
+
+            /**
+             * Creates a new ListEndpointsResponse instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns ListEndpointsResponse instance
+             */
+            public static create(properties?: Ydb.Discovery.IListEndpointsResponse): Ydb.Discovery.ListEndpointsResponse;
+
+            /**
+             * Encodes the specified ListEndpointsResponse message. Does not implicitly {@link Ydb.Discovery.ListEndpointsResponse.verify|verify} messages.
+             * @param message ListEndpointsResponse message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: Ydb.Discovery.IListEndpointsResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified ListEndpointsResponse message, length delimited. Does not implicitly {@link Ydb.Discovery.ListEndpointsResponse.verify|verify} messages.
+             * @param message ListEndpointsResponse message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: Ydb.Discovery.IListEndpointsResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a ListEndpointsResponse message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns ListEndpointsResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Ydb.Discovery.ListEndpointsResponse;
+
+            /**
+             * Decodes a ListEndpointsResponse message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns ListEndpointsResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Ydb.Discovery.ListEndpointsResponse;
+
+            /**
+             * Verifies a ListEndpointsResponse message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a ListEndpointsResponse message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns ListEndpointsResponse
+             */
+            public static fromObject(object: { [k: string]: any }): Ydb.Discovery.ListEndpointsResponse;
+
+            /**
+             * Creates a plain object from a ListEndpointsResponse message. Also converts values to other types if specified.
+             * @param message ListEndpointsResponse
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: Ydb.Discovery.ListEndpointsResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this ListEndpointsResponse to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of a WhoAmIRequest. */
+        interface IWhoAmIRequest {
+
+            /** WhoAmIRequest includeGroups */
+            includeGroups?: (boolean|null);
+        }
+
+        /** Represents a WhoAmIRequest. */
+        class WhoAmIRequest implements IWhoAmIRequest {
+
+            /**
+             * Constructs a new WhoAmIRequest.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: Ydb.Discovery.IWhoAmIRequest);
+
+            /** WhoAmIRequest includeGroups. */
+            public includeGroups: boolean;
+
+            /**
+             * Creates a new WhoAmIRequest instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns WhoAmIRequest instance
+             */
+            public static create(properties?: Ydb.Discovery.IWhoAmIRequest): Ydb.Discovery.WhoAmIRequest;
+
+            /**
+             * Encodes the specified WhoAmIRequest message. Does not implicitly {@link Ydb.Discovery.WhoAmIRequest.verify|verify} messages.
+             * @param message WhoAmIRequest message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: Ydb.Discovery.IWhoAmIRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified WhoAmIRequest message, length delimited. Does not implicitly {@link Ydb.Discovery.WhoAmIRequest.verify|verify} messages.
+             * @param message WhoAmIRequest message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: Ydb.Discovery.IWhoAmIRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a WhoAmIRequest message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns WhoAmIRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Ydb.Discovery.WhoAmIRequest;
+
+            /**
+             * Decodes a WhoAmIRequest message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns WhoAmIRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Ydb.Discovery.WhoAmIRequest;
+
+            /**
+             * Verifies a WhoAmIRequest message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a WhoAmIRequest message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns WhoAmIRequest
+             */
+            public static fromObject(object: { [k: string]: any }): Ydb.Discovery.WhoAmIRequest;
+
+            /**
+             * Creates a plain object from a WhoAmIRequest message. Also converts values to other types if specified.
+             * @param message WhoAmIRequest
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: Ydb.Discovery.WhoAmIRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this WhoAmIRequest to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of a WhoAmIResult. */
+        interface IWhoAmIResult {
+
+            /** WhoAmIResult user */
+            user?: (string|null);
+
+            /** WhoAmIResult groups */
+            groups?: (string[]|null);
+        }
+
+        /** Represents a WhoAmIResult. */
+        class WhoAmIResult implements IWhoAmIResult {
+
+            /**
+             * Constructs a new WhoAmIResult.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: Ydb.Discovery.IWhoAmIResult);
+
+            /** WhoAmIResult user. */
+            public user: string;
+
+            /** WhoAmIResult groups. */
+            public groups: string[];
+
+            /**
+             * Creates a new WhoAmIResult instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns WhoAmIResult instance
+             */
+            public static create(properties?: Ydb.Discovery.IWhoAmIResult): Ydb.Discovery.WhoAmIResult;
+
+            /**
+             * Encodes the specified WhoAmIResult message. Does not implicitly {@link Ydb.Discovery.WhoAmIResult.verify|verify} messages.
+             * @param message WhoAmIResult message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: Ydb.Discovery.IWhoAmIResult, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified WhoAmIResult message, length delimited. Does not implicitly {@link Ydb.Discovery.WhoAmIResult.verify|verify} messages.
+             * @param message WhoAmIResult message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: Ydb.Discovery.IWhoAmIResult, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a WhoAmIResult message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns WhoAmIResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Ydb.Discovery.WhoAmIResult;
+
+            /**
+             * Decodes a WhoAmIResult message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns WhoAmIResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Ydb.Discovery.WhoAmIResult;
+
+            /**
+             * Verifies a WhoAmIResult message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a WhoAmIResult message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns WhoAmIResult
+             */
+            public static fromObject(object: { [k: string]: any }): Ydb.Discovery.WhoAmIResult;
+
+            /**
+             * Creates a plain object from a WhoAmIResult message. Also converts values to other types if specified.
+             * @param message WhoAmIResult
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: Ydb.Discovery.WhoAmIResult, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this WhoAmIResult to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+
+        /** Properties of a WhoAmIResponse. */
+        interface IWhoAmIResponse {
+
+            /** WhoAmIResponse operation */
+            operation?: (Ydb.Operations.IOperation|null);
+        }
+
+        /** Represents a WhoAmIResponse. */
+        class WhoAmIResponse implements IWhoAmIResponse {
+
+            /**
+             * Constructs a new WhoAmIResponse.
+             * @param [properties] Properties to set
+             */
+            constructor(properties?: Ydb.Discovery.IWhoAmIResponse);
+
+            /** WhoAmIResponse operation. */
+            public operation?: (Ydb.Operations.IOperation|null);
+
+            /**
+             * Creates a new WhoAmIResponse instance using the specified properties.
+             * @param [properties] Properties to set
+             * @returns WhoAmIResponse instance
+             */
+            public static create(properties?: Ydb.Discovery.IWhoAmIResponse): Ydb.Discovery.WhoAmIResponse;
+
+            /**
+             * Encodes the specified WhoAmIResponse message. Does not implicitly {@link Ydb.Discovery.WhoAmIResponse.verify|verify} messages.
+             * @param message WhoAmIResponse message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encode(message: Ydb.Discovery.IWhoAmIResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Encodes the specified WhoAmIResponse message, length delimited. Does not implicitly {@link Ydb.Discovery.WhoAmIResponse.verify|verify} messages.
+             * @param message WhoAmIResponse message or plain object to encode
+             * @param [writer] Writer to encode to
+             * @returns Writer
+             */
+            public static encodeDelimited(message: Ydb.Discovery.IWhoAmIResponse, writer?: $protobuf.Writer): $protobuf.Writer;
+
+            /**
+             * Decodes a WhoAmIResponse message from the specified reader or buffer.
+             * @param reader Reader or buffer to decode from
+             * @param [length] Message length if known beforehand
+             * @returns WhoAmIResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): Ydb.Discovery.WhoAmIResponse;
+
+            /**
+             * Decodes a WhoAmIResponse message from the specified reader or buffer, length delimited.
+             * @param reader Reader or buffer to decode from
+             * @returns WhoAmIResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): Ydb.Discovery.WhoAmIResponse;
+
+            /**
+             * Verifies a WhoAmIResponse message.
+             * @param message Plain object to verify
+             * @returns `null` if valid, otherwise the reason why it is not
+             */
+            public static verify(message: { [k: string]: any }): (string|null);
+
+            /**
+             * Creates a WhoAmIResponse message from a plain object. Also converts values to their respective internal types.
+             * @param object Plain object
+             * @returns WhoAmIResponse
+             */
+            public static fromObject(object: { [k: string]: any }): Ydb.Discovery.WhoAmIResponse;
+
+            /**
+             * Creates a plain object from a WhoAmIResponse message. Also converts values to other types if specified.
+             * @param message WhoAmIResponse
+             * @param [options] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(message: Ydb.Discovery.WhoAmIResponse, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this WhoAmIResponse to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+    }
 }
 
 /** Namespace google. */

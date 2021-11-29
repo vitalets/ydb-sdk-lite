@@ -43485,6 +43485,1722 @@ $root.Ydb = (function() {
         return Scripting;
     })();
 
+    Ydb.Discovery = (function() {
+
+        /**
+         * Namespace Discovery.
+         * @memberof Ydb
+         * @namespace
+         */
+        var Discovery = {};
+
+        Discovery.V1 = (function() {
+
+            /**
+             * Namespace V1.
+             * @memberof Ydb.Discovery
+             * @namespace
+             */
+            var V1 = {};
+
+            V1.DiscoveryService = (function() {
+
+                /**
+                 * Constructs a new DiscoveryService service.
+                 * @memberof Ydb.Discovery.V1
+                 * @classdesc Represents a DiscoveryService
+                 * @extends $protobuf.rpc.Service
+                 * @constructor
+                 * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
+                 * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
+                 * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
+                 */
+                function DiscoveryService(rpcImpl, requestDelimited, responseDelimited) {
+                    $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+                }
+
+                (DiscoveryService.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = DiscoveryService;
+
+                /**
+                 * Creates new DiscoveryService service using the specified rpc implementation.
+                 * @function create
+                 * @memberof Ydb.Discovery.V1.DiscoveryService
+                 * @static
+                 * @param {$protobuf.RPCImpl} rpcImpl RPC implementation
+                 * @param {boolean} [requestDelimited=false] Whether requests are length-delimited
+                 * @param {boolean} [responseDelimited=false] Whether responses are length-delimited
+                 * @returns {DiscoveryService} RPC service. Useful where requests and/or responses are streamed.
+                 */
+                DiscoveryService.create = function create(rpcImpl, requestDelimited, responseDelimited) {
+                    return new this(rpcImpl, requestDelimited, responseDelimited);
+                };
+
+                /**
+                 * Callback as used by {@link Ydb.Discovery.V1.DiscoveryService#listEndpoints}.
+                 * @memberof Ydb.Discovery.V1.DiscoveryService
+                 * @typedef ListEndpointsCallback
+                 * @type {function}
+                 * @param {Error|null} error Error, if any
+                 * @param {Ydb.Discovery.ListEndpointsResponse} [response] ListEndpointsResponse
+                 */
+
+                /**
+                 * Calls ListEndpoints.
+                 * @function listEndpoints
+                 * @memberof Ydb.Discovery.V1.DiscoveryService
+                 * @instance
+                 * @param {Ydb.Discovery.IListEndpointsRequest} request ListEndpointsRequest message or plain object
+                 * @param {Ydb.Discovery.V1.DiscoveryService.ListEndpointsCallback} callback Node-style callback called with the error, if any, and ListEndpointsResponse
+                 * @returns {undefined}
+                 * @variation 1
+                 */
+                Object.defineProperty(DiscoveryService.prototype.listEndpoints = function listEndpoints(request, callback) {
+                    return this.rpcCall(listEndpoints, $root.Ydb.Discovery.ListEndpointsRequest, $root.Ydb.Discovery.ListEndpointsResponse, request, callback);
+                }, "name", { value: "ListEndpoints" });
+
+                /**
+                 * Calls ListEndpoints.
+                 * @function listEndpoints
+                 * @memberof Ydb.Discovery.V1.DiscoveryService
+                 * @instance
+                 * @param {Ydb.Discovery.IListEndpointsRequest} request ListEndpointsRequest message or plain object
+                 * @returns {Promise<Ydb.Discovery.ListEndpointsResponse>} Promise
+                 * @variation 2
+                 */
+
+                /**
+                 * Callback as used by {@link Ydb.Discovery.V1.DiscoveryService#whoAmI}.
+                 * @memberof Ydb.Discovery.V1.DiscoveryService
+                 * @typedef WhoAmICallback
+                 * @type {function}
+                 * @param {Error|null} error Error, if any
+                 * @param {Ydb.Discovery.WhoAmIResponse} [response] WhoAmIResponse
+                 */
+
+                /**
+                 * Calls WhoAmI.
+                 * @function whoAmI
+                 * @memberof Ydb.Discovery.V1.DiscoveryService
+                 * @instance
+                 * @param {Ydb.Discovery.IWhoAmIRequest} request WhoAmIRequest message or plain object
+                 * @param {Ydb.Discovery.V1.DiscoveryService.WhoAmICallback} callback Node-style callback called with the error, if any, and WhoAmIResponse
+                 * @returns {undefined}
+                 * @variation 1
+                 */
+                Object.defineProperty(DiscoveryService.prototype.whoAmI = function whoAmI(request, callback) {
+                    return this.rpcCall(whoAmI, $root.Ydb.Discovery.WhoAmIRequest, $root.Ydb.Discovery.WhoAmIResponse, request, callback);
+                }, "name", { value: "WhoAmI" });
+
+                /**
+                 * Calls WhoAmI.
+                 * @function whoAmI
+                 * @memberof Ydb.Discovery.V1.DiscoveryService
+                 * @instance
+                 * @param {Ydb.Discovery.IWhoAmIRequest} request WhoAmIRequest message or plain object
+                 * @returns {Promise<Ydb.Discovery.WhoAmIResponse>} Promise
+                 * @variation 2
+                 */
+
+                return DiscoveryService;
+            })();
+
+            return V1;
+        })();
+
+        Discovery.ListEndpointsRequest = (function() {
+
+            /**
+             * Properties of a ListEndpointsRequest.
+             * @memberof Ydb.Discovery
+             * @interface IListEndpointsRequest
+             * @property {string|null} [database] ListEndpointsRequest database
+             * @property {Array.<string>|null} [service] ListEndpointsRequest service
+             */
+
+            /**
+             * Constructs a new ListEndpointsRequest.
+             * @memberof Ydb.Discovery
+             * @classdesc Represents a ListEndpointsRequest.
+             * @implements IListEndpointsRequest
+             * @constructor
+             * @param {Ydb.Discovery.IListEndpointsRequest=} [properties] Properties to set
+             */
+            function ListEndpointsRequest(properties) {
+                this.service = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * ListEndpointsRequest database.
+             * @member {string} database
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @instance
+             */
+            ListEndpointsRequest.prototype.database = "";
+
+            /**
+             * ListEndpointsRequest service.
+             * @member {Array.<string>} service
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @instance
+             */
+            ListEndpointsRequest.prototype.service = $util.emptyArray;
+
+            /**
+             * Creates a new ListEndpointsRequest instance using the specified properties.
+             * @function create
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsRequest=} [properties] Properties to set
+             * @returns {Ydb.Discovery.ListEndpointsRequest} ListEndpointsRequest instance
+             */
+            ListEndpointsRequest.create = function create(properties) {
+                return new ListEndpointsRequest(properties);
+            };
+
+            /**
+             * Encodes the specified ListEndpointsRequest message. Does not implicitly {@link Ydb.Discovery.ListEndpointsRequest.verify|verify} messages.
+             * @function encode
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsRequest} message ListEndpointsRequest message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListEndpointsRequest.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.database != null && Object.hasOwnProperty.call(message, "database"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.database);
+                if (message.service != null && message.service.length)
+                    for (var i = 0; i < message.service.length; ++i)
+                        writer.uint32(/* id 2, wireType 2 =*/18).string(message.service[i]);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified ListEndpointsRequest message, length delimited. Does not implicitly {@link Ydb.Discovery.ListEndpointsRequest.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsRequest} message ListEndpointsRequest message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListEndpointsRequest.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a ListEndpointsRequest message from the specified reader or buffer.
+             * @function decode
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {Ydb.Discovery.ListEndpointsRequest} ListEndpointsRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListEndpointsRequest.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Ydb.Discovery.ListEndpointsRequest();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.database = reader.string();
+                        break;
+                    case 2:
+                        if (!(message.service && message.service.length))
+                            message.service = [];
+                        message.service.push(reader.string());
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a ListEndpointsRequest message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {Ydb.Discovery.ListEndpointsRequest} ListEndpointsRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListEndpointsRequest.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a ListEndpointsRequest message.
+             * @function verify
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            ListEndpointsRequest.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.database != null && message.hasOwnProperty("database"))
+                    if (!$util.isString(message.database))
+                        return "database: string expected";
+                if (message.service != null && message.hasOwnProperty("service")) {
+                    if (!Array.isArray(message.service))
+                        return "service: array expected";
+                    for (var i = 0; i < message.service.length; ++i)
+                        if (!$util.isString(message.service[i]))
+                            return "service: string[] expected";
+                }
+                return null;
+            };
+
+            /**
+             * Creates a ListEndpointsRequest message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {Ydb.Discovery.ListEndpointsRequest} ListEndpointsRequest
+             */
+            ListEndpointsRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.Ydb.Discovery.ListEndpointsRequest)
+                    return object;
+                var message = new $root.Ydb.Discovery.ListEndpointsRequest();
+                if (object.database != null)
+                    message.database = String(object.database);
+                if (object.service) {
+                    if (!Array.isArray(object.service))
+                        throw TypeError(".Ydb.Discovery.ListEndpointsRequest.service: array expected");
+                    message.service = [];
+                    for (var i = 0; i < object.service.length; ++i)
+                        message.service[i] = String(object.service[i]);
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a ListEndpointsRequest message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @static
+             * @param {Ydb.Discovery.ListEndpointsRequest} message ListEndpointsRequest
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            ListEndpointsRequest.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.service = [];
+                if (options.defaults)
+                    object.database = "";
+                if (message.database != null && message.hasOwnProperty("database"))
+                    object.database = message.database;
+                if (message.service && message.service.length) {
+                    object.service = [];
+                    for (var j = 0; j < message.service.length; ++j)
+                        object.service[j] = message.service[j];
+                }
+                return object;
+            };
+
+            /**
+             * Converts this ListEndpointsRequest to JSON.
+             * @function toJSON
+             * @memberof Ydb.Discovery.ListEndpointsRequest
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            ListEndpointsRequest.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return ListEndpointsRequest;
+        })();
+
+        Discovery.EndpointInfo = (function() {
+
+            /**
+             * Properties of an EndpointInfo.
+             * @memberof Ydb.Discovery
+             * @interface IEndpointInfo
+             * @property {string|null} [address] EndpointInfo address
+             * @property {number|null} [port] EndpointInfo port
+             * @property {number|null} [loadFactor] EndpointInfo loadFactor
+             * @property {boolean|null} [ssl] EndpointInfo ssl
+             * @property {Array.<string>|null} [service] EndpointInfo service
+             * @property {string|null} [location] EndpointInfo location
+             * @property {number|null} [nodeId] EndpointInfo nodeId
+             */
+
+            /**
+             * Constructs a new EndpointInfo.
+             * @memberof Ydb.Discovery
+             * @classdesc Represents an EndpointInfo.
+             * @implements IEndpointInfo
+             * @constructor
+             * @param {Ydb.Discovery.IEndpointInfo=} [properties] Properties to set
+             */
+            function EndpointInfo(properties) {
+                this.service = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * EndpointInfo address.
+             * @member {string} address
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             */
+            EndpointInfo.prototype.address = "";
+
+            /**
+             * EndpointInfo port.
+             * @member {number} port
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             */
+            EndpointInfo.prototype.port = 0;
+
+            /**
+             * EndpointInfo loadFactor.
+             * @member {number} loadFactor
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             */
+            EndpointInfo.prototype.loadFactor = 0;
+
+            /**
+             * EndpointInfo ssl.
+             * @member {boolean} ssl
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             */
+            EndpointInfo.prototype.ssl = false;
+
+            /**
+             * EndpointInfo service.
+             * @member {Array.<string>} service
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             */
+            EndpointInfo.prototype.service = $util.emptyArray;
+
+            /**
+             * EndpointInfo location.
+             * @member {string} location
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             */
+            EndpointInfo.prototype.location = "";
+
+            /**
+             * EndpointInfo nodeId.
+             * @member {number} nodeId
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             */
+            EndpointInfo.prototype.nodeId = 0;
+
+            /**
+             * Creates a new EndpointInfo instance using the specified properties.
+             * @function create
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {Ydb.Discovery.IEndpointInfo=} [properties] Properties to set
+             * @returns {Ydb.Discovery.EndpointInfo} EndpointInfo instance
+             */
+            EndpointInfo.create = function create(properties) {
+                return new EndpointInfo(properties);
+            };
+
+            /**
+             * Encodes the specified EndpointInfo message. Does not implicitly {@link Ydb.Discovery.EndpointInfo.verify|verify} messages.
+             * @function encode
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {Ydb.Discovery.IEndpointInfo} message EndpointInfo message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            EndpointInfo.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.address != null && Object.hasOwnProperty.call(message, "address"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.address);
+                if (message.port != null && Object.hasOwnProperty.call(message, "port"))
+                    writer.uint32(/* id 2, wireType 0 =*/16).uint32(message.port);
+                if (message.loadFactor != null && Object.hasOwnProperty.call(message, "loadFactor"))
+                    writer.uint32(/* id 3, wireType 5 =*/29).float(message.loadFactor);
+                if (message.ssl != null && Object.hasOwnProperty.call(message, "ssl"))
+                    writer.uint32(/* id 4, wireType 0 =*/32).bool(message.ssl);
+                if (message.service != null && message.service.length)
+                    for (var i = 0; i < message.service.length; ++i)
+                        writer.uint32(/* id 5, wireType 2 =*/42).string(message.service[i]);
+                if (message.location != null && Object.hasOwnProperty.call(message, "location"))
+                    writer.uint32(/* id 6, wireType 2 =*/50).string(message.location);
+                if (message.nodeId != null && Object.hasOwnProperty.call(message, "nodeId"))
+                    writer.uint32(/* id 7, wireType 0 =*/56).uint32(message.nodeId);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified EndpointInfo message, length delimited. Does not implicitly {@link Ydb.Discovery.EndpointInfo.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {Ydb.Discovery.IEndpointInfo} message EndpointInfo message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            EndpointInfo.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes an EndpointInfo message from the specified reader or buffer.
+             * @function decode
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {Ydb.Discovery.EndpointInfo} EndpointInfo
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            EndpointInfo.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Ydb.Discovery.EndpointInfo();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.address = reader.string();
+                        break;
+                    case 2:
+                        message.port = reader.uint32();
+                        break;
+                    case 3:
+                        message.loadFactor = reader.float();
+                        break;
+                    case 4:
+                        message.ssl = reader.bool();
+                        break;
+                    case 5:
+                        if (!(message.service && message.service.length))
+                            message.service = [];
+                        message.service.push(reader.string());
+                        break;
+                    case 6:
+                        message.location = reader.string();
+                        break;
+                    case 7:
+                        message.nodeId = reader.uint32();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes an EndpointInfo message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {Ydb.Discovery.EndpointInfo} EndpointInfo
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            EndpointInfo.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies an EndpointInfo message.
+             * @function verify
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            EndpointInfo.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.address != null && message.hasOwnProperty("address"))
+                    if (!$util.isString(message.address))
+                        return "address: string expected";
+                if (message.port != null && message.hasOwnProperty("port"))
+                    if (!$util.isInteger(message.port))
+                        return "port: integer expected";
+                if (message.loadFactor != null && message.hasOwnProperty("loadFactor"))
+                    if (typeof message.loadFactor !== "number")
+                        return "loadFactor: number expected";
+                if (message.ssl != null && message.hasOwnProperty("ssl"))
+                    if (typeof message.ssl !== "boolean")
+                        return "ssl: boolean expected";
+                if (message.service != null && message.hasOwnProperty("service")) {
+                    if (!Array.isArray(message.service))
+                        return "service: array expected";
+                    for (var i = 0; i < message.service.length; ++i)
+                        if (!$util.isString(message.service[i]))
+                            return "service: string[] expected";
+                }
+                if (message.location != null && message.hasOwnProperty("location"))
+                    if (!$util.isString(message.location))
+                        return "location: string expected";
+                if (message.nodeId != null && message.hasOwnProperty("nodeId"))
+                    if (!$util.isInteger(message.nodeId))
+                        return "nodeId: integer expected";
+                return null;
+            };
+
+            /**
+             * Creates an EndpointInfo message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {Ydb.Discovery.EndpointInfo} EndpointInfo
+             */
+            EndpointInfo.fromObject = function fromObject(object) {
+                if (object instanceof $root.Ydb.Discovery.EndpointInfo)
+                    return object;
+                var message = new $root.Ydb.Discovery.EndpointInfo();
+                if (object.address != null)
+                    message.address = String(object.address);
+                if (object.port != null)
+                    message.port = object.port >>> 0;
+                if (object.loadFactor != null)
+                    message.loadFactor = Number(object.loadFactor);
+                if (object.ssl != null)
+                    message.ssl = Boolean(object.ssl);
+                if (object.service) {
+                    if (!Array.isArray(object.service))
+                        throw TypeError(".Ydb.Discovery.EndpointInfo.service: array expected");
+                    message.service = [];
+                    for (var i = 0; i < object.service.length; ++i)
+                        message.service[i] = String(object.service[i]);
+                }
+                if (object.location != null)
+                    message.location = String(object.location);
+                if (object.nodeId != null)
+                    message.nodeId = object.nodeId >>> 0;
+                return message;
+            };
+
+            /**
+             * Creates a plain object from an EndpointInfo message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @static
+             * @param {Ydb.Discovery.EndpointInfo} message EndpointInfo
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            EndpointInfo.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.service = [];
+                if (options.defaults) {
+                    object.address = "";
+                    object.port = 0;
+                    object.loadFactor = 0;
+                    object.ssl = false;
+                    object.location = "";
+                    object.nodeId = 0;
+                }
+                if (message.address != null && message.hasOwnProperty("address"))
+                    object.address = message.address;
+                if (message.port != null && message.hasOwnProperty("port"))
+                    object.port = message.port;
+                if (message.loadFactor != null && message.hasOwnProperty("loadFactor"))
+                    object.loadFactor = options.json && !isFinite(message.loadFactor) ? String(message.loadFactor) : message.loadFactor;
+                if (message.ssl != null && message.hasOwnProperty("ssl"))
+                    object.ssl = message.ssl;
+                if (message.service && message.service.length) {
+                    object.service = [];
+                    for (var j = 0; j < message.service.length; ++j)
+                        object.service[j] = message.service[j];
+                }
+                if (message.location != null && message.hasOwnProperty("location"))
+                    object.location = message.location;
+                if (message.nodeId != null && message.hasOwnProperty("nodeId"))
+                    object.nodeId = message.nodeId;
+                return object;
+            };
+
+            /**
+             * Converts this EndpointInfo to JSON.
+             * @function toJSON
+             * @memberof Ydb.Discovery.EndpointInfo
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            EndpointInfo.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return EndpointInfo;
+        })();
+
+        Discovery.ListEndpointsResult = (function() {
+
+            /**
+             * Properties of a ListEndpointsResult.
+             * @memberof Ydb.Discovery
+             * @interface IListEndpointsResult
+             * @property {Array.<Ydb.Discovery.IEndpointInfo>|null} [endpoints] ListEndpointsResult endpoints
+             * @property {string|null} [selfLocation] ListEndpointsResult selfLocation
+             */
+
+            /**
+             * Constructs a new ListEndpointsResult.
+             * @memberof Ydb.Discovery
+             * @classdesc Represents a ListEndpointsResult.
+             * @implements IListEndpointsResult
+             * @constructor
+             * @param {Ydb.Discovery.IListEndpointsResult=} [properties] Properties to set
+             */
+            function ListEndpointsResult(properties) {
+                this.endpoints = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * ListEndpointsResult endpoints.
+             * @member {Array.<Ydb.Discovery.IEndpointInfo>} endpoints
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @instance
+             */
+            ListEndpointsResult.prototype.endpoints = $util.emptyArray;
+
+            /**
+             * ListEndpointsResult selfLocation.
+             * @member {string} selfLocation
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @instance
+             */
+            ListEndpointsResult.prototype.selfLocation = "";
+
+            /**
+             * Creates a new ListEndpointsResult instance using the specified properties.
+             * @function create
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsResult=} [properties] Properties to set
+             * @returns {Ydb.Discovery.ListEndpointsResult} ListEndpointsResult instance
+             */
+            ListEndpointsResult.create = function create(properties) {
+                return new ListEndpointsResult(properties);
+            };
+
+            /**
+             * Encodes the specified ListEndpointsResult message. Does not implicitly {@link Ydb.Discovery.ListEndpointsResult.verify|verify} messages.
+             * @function encode
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsResult} message ListEndpointsResult message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListEndpointsResult.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.endpoints != null && message.endpoints.length)
+                    for (var i = 0; i < message.endpoints.length; ++i)
+                        $root.Ydb.Discovery.EndpointInfo.encode(message.endpoints[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                if (message.selfLocation != null && Object.hasOwnProperty.call(message, "selfLocation"))
+                    writer.uint32(/* id 2, wireType 2 =*/18).string(message.selfLocation);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified ListEndpointsResult message, length delimited. Does not implicitly {@link Ydb.Discovery.ListEndpointsResult.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsResult} message ListEndpointsResult message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListEndpointsResult.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a ListEndpointsResult message from the specified reader or buffer.
+             * @function decode
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {Ydb.Discovery.ListEndpointsResult} ListEndpointsResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListEndpointsResult.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Ydb.Discovery.ListEndpointsResult();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        if (!(message.endpoints && message.endpoints.length))
+                            message.endpoints = [];
+                        message.endpoints.push($root.Ydb.Discovery.EndpointInfo.decode(reader, reader.uint32()));
+                        break;
+                    case 2:
+                        message.selfLocation = reader.string();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a ListEndpointsResult message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {Ydb.Discovery.ListEndpointsResult} ListEndpointsResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListEndpointsResult.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a ListEndpointsResult message.
+             * @function verify
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            ListEndpointsResult.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.endpoints != null && message.hasOwnProperty("endpoints")) {
+                    if (!Array.isArray(message.endpoints))
+                        return "endpoints: array expected";
+                    for (var i = 0; i < message.endpoints.length; ++i) {
+                        var error = $root.Ydb.Discovery.EndpointInfo.verify(message.endpoints[i]);
+                        if (error)
+                            return "endpoints." + error;
+                    }
+                }
+                if (message.selfLocation != null && message.hasOwnProperty("selfLocation"))
+                    if (!$util.isString(message.selfLocation))
+                        return "selfLocation: string expected";
+                return null;
+            };
+
+            /**
+             * Creates a ListEndpointsResult message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {Ydb.Discovery.ListEndpointsResult} ListEndpointsResult
+             */
+            ListEndpointsResult.fromObject = function fromObject(object) {
+                if (object instanceof $root.Ydb.Discovery.ListEndpointsResult)
+                    return object;
+                var message = new $root.Ydb.Discovery.ListEndpointsResult();
+                if (object.endpoints) {
+                    if (!Array.isArray(object.endpoints))
+                        throw TypeError(".Ydb.Discovery.ListEndpointsResult.endpoints: array expected");
+                    message.endpoints = [];
+                    for (var i = 0; i < object.endpoints.length; ++i) {
+                        if (typeof object.endpoints[i] !== "object")
+                            throw TypeError(".Ydb.Discovery.ListEndpointsResult.endpoints: object expected");
+                        message.endpoints[i] = $root.Ydb.Discovery.EndpointInfo.fromObject(object.endpoints[i]);
+                    }
+                }
+                if (object.selfLocation != null)
+                    message.selfLocation = String(object.selfLocation);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a ListEndpointsResult message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @static
+             * @param {Ydb.Discovery.ListEndpointsResult} message ListEndpointsResult
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            ListEndpointsResult.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.endpoints = [];
+                if (options.defaults)
+                    object.selfLocation = "";
+                if (message.endpoints && message.endpoints.length) {
+                    object.endpoints = [];
+                    for (var j = 0; j < message.endpoints.length; ++j)
+                        object.endpoints[j] = $root.Ydb.Discovery.EndpointInfo.toObject(message.endpoints[j], options);
+                }
+                if (message.selfLocation != null && message.hasOwnProperty("selfLocation"))
+                    object.selfLocation = message.selfLocation;
+                return object;
+            };
+
+            /**
+             * Converts this ListEndpointsResult to JSON.
+             * @function toJSON
+             * @memberof Ydb.Discovery.ListEndpointsResult
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            ListEndpointsResult.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return ListEndpointsResult;
+        })();
+
+        Discovery.ListEndpointsResponse = (function() {
+
+            /**
+             * Properties of a ListEndpointsResponse.
+             * @memberof Ydb.Discovery
+             * @interface IListEndpointsResponse
+             * @property {Ydb.Operations.IOperation|null} [operation] ListEndpointsResponse operation
+             */
+
+            /**
+             * Constructs a new ListEndpointsResponse.
+             * @memberof Ydb.Discovery
+             * @classdesc Represents a ListEndpointsResponse.
+             * @implements IListEndpointsResponse
+             * @constructor
+             * @param {Ydb.Discovery.IListEndpointsResponse=} [properties] Properties to set
+             */
+            function ListEndpointsResponse(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * ListEndpointsResponse operation.
+             * @member {Ydb.Operations.IOperation|null|undefined} operation
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @instance
+             */
+            ListEndpointsResponse.prototype.operation = null;
+
+            /**
+             * Creates a new ListEndpointsResponse instance using the specified properties.
+             * @function create
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsResponse=} [properties] Properties to set
+             * @returns {Ydb.Discovery.ListEndpointsResponse} ListEndpointsResponse instance
+             */
+            ListEndpointsResponse.create = function create(properties) {
+                return new ListEndpointsResponse(properties);
+            };
+
+            /**
+             * Encodes the specified ListEndpointsResponse message. Does not implicitly {@link Ydb.Discovery.ListEndpointsResponse.verify|verify} messages.
+             * @function encode
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsResponse} message ListEndpointsResponse message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListEndpointsResponse.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.operation != null && Object.hasOwnProperty.call(message, "operation"))
+                    $root.Ydb.Operations.Operation.encode(message.operation, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                return writer;
+            };
+
+            /**
+             * Encodes the specified ListEndpointsResponse message, length delimited. Does not implicitly {@link Ydb.Discovery.ListEndpointsResponse.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {Ydb.Discovery.IListEndpointsResponse} message ListEndpointsResponse message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            ListEndpointsResponse.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a ListEndpointsResponse message from the specified reader or buffer.
+             * @function decode
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {Ydb.Discovery.ListEndpointsResponse} ListEndpointsResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListEndpointsResponse.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Ydb.Discovery.ListEndpointsResponse();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.operation = $root.Ydb.Operations.Operation.decode(reader, reader.uint32());
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a ListEndpointsResponse message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {Ydb.Discovery.ListEndpointsResponse} ListEndpointsResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            ListEndpointsResponse.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a ListEndpointsResponse message.
+             * @function verify
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            ListEndpointsResponse.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.operation != null && message.hasOwnProperty("operation")) {
+                    var error = $root.Ydb.Operations.Operation.verify(message.operation);
+                    if (error)
+                        return "operation." + error;
+                }
+                return null;
+            };
+
+            /**
+             * Creates a ListEndpointsResponse message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {Ydb.Discovery.ListEndpointsResponse} ListEndpointsResponse
+             */
+            ListEndpointsResponse.fromObject = function fromObject(object) {
+                if (object instanceof $root.Ydb.Discovery.ListEndpointsResponse)
+                    return object;
+                var message = new $root.Ydb.Discovery.ListEndpointsResponse();
+                if (object.operation != null) {
+                    if (typeof object.operation !== "object")
+                        throw TypeError(".Ydb.Discovery.ListEndpointsResponse.operation: object expected");
+                    message.operation = $root.Ydb.Operations.Operation.fromObject(object.operation);
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a ListEndpointsResponse message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @static
+             * @param {Ydb.Discovery.ListEndpointsResponse} message ListEndpointsResponse
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            ListEndpointsResponse.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults)
+                    object.operation = null;
+                if (message.operation != null && message.hasOwnProperty("operation"))
+                    object.operation = $root.Ydb.Operations.Operation.toObject(message.operation, options);
+                return object;
+            };
+
+            /**
+             * Converts this ListEndpointsResponse to JSON.
+             * @function toJSON
+             * @memberof Ydb.Discovery.ListEndpointsResponse
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            ListEndpointsResponse.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return ListEndpointsResponse;
+        })();
+
+        Discovery.WhoAmIRequest = (function() {
+
+            /**
+             * Properties of a WhoAmIRequest.
+             * @memberof Ydb.Discovery
+             * @interface IWhoAmIRequest
+             * @property {boolean|null} [includeGroups] WhoAmIRequest includeGroups
+             */
+
+            /**
+             * Constructs a new WhoAmIRequest.
+             * @memberof Ydb.Discovery
+             * @classdesc Represents a WhoAmIRequest.
+             * @implements IWhoAmIRequest
+             * @constructor
+             * @param {Ydb.Discovery.IWhoAmIRequest=} [properties] Properties to set
+             */
+            function WhoAmIRequest(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * WhoAmIRequest includeGroups.
+             * @member {boolean} includeGroups
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @instance
+             */
+            WhoAmIRequest.prototype.includeGroups = false;
+
+            /**
+             * Creates a new WhoAmIRequest instance using the specified properties.
+             * @function create
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIRequest=} [properties] Properties to set
+             * @returns {Ydb.Discovery.WhoAmIRequest} WhoAmIRequest instance
+             */
+            WhoAmIRequest.create = function create(properties) {
+                return new WhoAmIRequest(properties);
+            };
+
+            /**
+             * Encodes the specified WhoAmIRequest message. Does not implicitly {@link Ydb.Discovery.WhoAmIRequest.verify|verify} messages.
+             * @function encode
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIRequest} message WhoAmIRequest message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            WhoAmIRequest.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.includeGroups != null && Object.hasOwnProperty.call(message, "includeGroups"))
+                    writer.uint32(/* id 1, wireType 0 =*/8).bool(message.includeGroups);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified WhoAmIRequest message, length delimited. Does not implicitly {@link Ydb.Discovery.WhoAmIRequest.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIRequest} message WhoAmIRequest message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            WhoAmIRequest.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a WhoAmIRequest message from the specified reader or buffer.
+             * @function decode
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {Ydb.Discovery.WhoAmIRequest} WhoAmIRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            WhoAmIRequest.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Ydb.Discovery.WhoAmIRequest();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.includeGroups = reader.bool();
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a WhoAmIRequest message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {Ydb.Discovery.WhoAmIRequest} WhoAmIRequest
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            WhoAmIRequest.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a WhoAmIRequest message.
+             * @function verify
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            WhoAmIRequest.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.includeGroups != null && message.hasOwnProperty("includeGroups"))
+                    if (typeof message.includeGroups !== "boolean")
+                        return "includeGroups: boolean expected";
+                return null;
+            };
+
+            /**
+             * Creates a WhoAmIRequest message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {Ydb.Discovery.WhoAmIRequest} WhoAmIRequest
+             */
+            WhoAmIRequest.fromObject = function fromObject(object) {
+                if (object instanceof $root.Ydb.Discovery.WhoAmIRequest)
+                    return object;
+                var message = new $root.Ydb.Discovery.WhoAmIRequest();
+                if (object.includeGroups != null)
+                    message.includeGroups = Boolean(object.includeGroups);
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a WhoAmIRequest message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @static
+             * @param {Ydb.Discovery.WhoAmIRequest} message WhoAmIRequest
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            WhoAmIRequest.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults)
+                    object.includeGroups = false;
+                if (message.includeGroups != null && message.hasOwnProperty("includeGroups"))
+                    object.includeGroups = message.includeGroups;
+                return object;
+            };
+
+            /**
+             * Converts this WhoAmIRequest to JSON.
+             * @function toJSON
+             * @memberof Ydb.Discovery.WhoAmIRequest
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            WhoAmIRequest.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return WhoAmIRequest;
+        })();
+
+        Discovery.WhoAmIResult = (function() {
+
+            /**
+             * Properties of a WhoAmIResult.
+             * @memberof Ydb.Discovery
+             * @interface IWhoAmIResult
+             * @property {string|null} [user] WhoAmIResult user
+             * @property {Array.<string>|null} [groups] WhoAmIResult groups
+             */
+
+            /**
+             * Constructs a new WhoAmIResult.
+             * @memberof Ydb.Discovery
+             * @classdesc Represents a WhoAmIResult.
+             * @implements IWhoAmIResult
+             * @constructor
+             * @param {Ydb.Discovery.IWhoAmIResult=} [properties] Properties to set
+             */
+            function WhoAmIResult(properties) {
+                this.groups = [];
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * WhoAmIResult user.
+             * @member {string} user
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @instance
+             */
+            WhoAmIResult.prototype.user = "";
+
+            /**
+             * WhoAmIResult groups.
+             * @member {Array.<string>} groups
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @instance
+             */
+            WhoAmIResult.prototype.groups = $util.emptyArray;
+
+            /**
+             * Creates a new WhoAmIResult instance using the specified properties.
+             * @function create
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIResult=} [properties] Properties to set
+             * @returns {Ydb.Discovery.WhoAmIResult} WhoAmIResult instance
+             */
+            WhoAmIResult.create = function create(properties) {
+                return new WhoAmIResult(properties);
+            };
+
+            /**
+             * Encodes the specified WhoAmIResult message. Does not implicitly {@link Ydb.Discovery.WhoAmIResult.verify|verify} messages.
+             * @function encode
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIResult} message WhoAmIResult message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            WhoAmIResult.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.user != null && Object.hasOwnProperty.call(message, "user"))
+                    writer.uint32(/* id 1, wireType 2 =*/10).string(message.user);
+                if (message.groups != null && message.groups.length)
+                    for (var i = 0; i < message.groups.length; ++i)
+                        writer.uint32(/* id 2, wireType 2 =*/18).string(message.groups[i]);
+                return writer;
+            };
+
+            /**
+             * Encodes the specified WhoAmIResult message, length delimited. Does not implicitly {@link Ydb.Discovery.WhoAmIResult.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIResult} message WhoAmIResult message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            WhoAmIResult.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a WhoAmIResult message from the specified reader or buffer.
+             * @function decode
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {Ydb.Discovery.WhoAmIResult} WhoAmIResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            WhoAmIResult.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Ydb.Discovery.WhoAmIResult();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.user = reader.string();
+                        break;
+                    case 2:
+                        if (!(message.groups && message.groups.length))
+                            message.groups = [];
+                        message.groups.push(reader.string());
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a WhoAmIResult message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {Ydb.Discovery.WhoAmIResult} WhoAmIResult
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            WhoAmIResult.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a WhoAmIResult message.
+             * @function verify
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            WhoAmIResult.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.user != null && message.hasOwnProperty("user"))
+                    if (!$util.isString(message.user))
+                        return "user: string expected";
+                if (message.groups != null && message.hasOwnProperty("groups")) {
+                    if (!Array.isArray(message.groups))
+                        return "groups: array expected";
+                    for (var i = 0; i < message.groups.length; ++i)
+                        if (!$util.isString(message.groups[i]))
+                            return "groups: string[] expected";
+                }
+                return null;
+            };
+
+            /**
+             * Creates a WhoAmIResult message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {Ydb.Discovery.WhoAmIResult} WhoAmIResult
+             */
+            WhoAmIResult.fromObject = function fromObject(object) {
+                if (object instanceof $root.Ydb.Discovery.WhoAmIResult)
+                    return object;
+                var message = new $root.Ydb.Discovery.WhoAmIResult();
+                if (object.user != null)
+                    message.user = String(object.user);
+                if (object.groups) {
+                    if (!Array.isArray(object.groups))
+                        throw TypeError(".Ydb.Discovery.WhoAmIResult.groups: array expected");
+                    message.groups = [];
+                    for (var i = 0; i < object.groups.length; ++i)
+                        message.groups[i] = String(object.groups[i]);
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a WhoAmIResult message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @static
+             * @param {Ydb.Discovery.WhoAmIResult} message WhoAmIResult
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            WhoAmIResult.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.arrays || options.defaults)
+                    object.groups = [];
+                if (options.defaults)
+                    object.user = "";
+                if (message.user != null && message.hasOwnProperty("user"))
+                    object.user = message.user;
+                if (message.groups && message.groups.length) {
+                    object.groups = [];
+                    for (var j = 0; j < message.groups.length; ++j)
+                        object.groups[j] = message.groups[j];
+                }
+                return object;
+            };
+
+            /**
+             * Converts this WhoAmIResult to JSON.
+             * @function toJSON
+             * @memberof Ydb.Discovery.WhoAmIResult
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            WhoAmIResult.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return WhoAmIResult;
+        })();
+
+        Discovery.WhoAmIResponse = (function() {
+
+            /**
+             * Properties of a WhoAmIResponse.
+             * @memberof Ydb.Discovery
+             * @interface IWhoAmIResponse
+             * @property {Ydb.Operations.IOperation|null} [operation] WhoAmIResponse operation
+             */
+
+            /**
+             * Constructs a new WhoAmIResponse.
+             * @memberof Ydb.Discovery
+             * @classdesc Represents a WhoAmIResponse.
+             * @implements IWhoAmIResponse
+             * @constructor
+             * @param {Ydb.Discovery.IWhoAmIResponse=} [properties] Properties to set
+             */
+            function WhoAmIResponse(properties) {
+                if (properties)
+                    for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                        if (properties[keys[i]] != null)
+                            this[keys[i]] = properties[keys[i]];
+            }
+
+            /**
+             * WhoAmIResponse operation.
+             * @member {Ydb.Operations.IOperation|null|undefined} operation
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @instance
+             */
+            WhoAmIResponse.prototype.operation = null;
+
+            /**
+             * Creates a new WhoAmIResponse instance using the specified properties.
+             * @function create
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIResponse=} [properties] Properties to set
+             * @returns {Ydb.Discovery.WhoAmIResponse} WhoAmIResponse instance
+             */
+            WhoAmIResponse.create = function create(properties) {
+                return new WhoAmIResponse(properties);
+            };
+
+            /**
+             * Encodes the specified WhoAmIResponse message. Does not implicitly {@link Ydb.Discovery.WhoAmIResponse.verify|verify} messages.
+             * @function encode
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIResponse} message WhoAmIResponse message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            WhoAmIResponse.encode = function encode(message, writer) {
+                if (!writer)
+                    writer = $Writer.create();
+                if (message.operation != null && Object.hasOwnProperty.call(message, "operation"))
+                    $root.Ydb.Operations.Operation.encode(message.operation, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+                return writer;
+            };
+
+            /**
+             * Encodes the specified WhoAmIResponse message, length delimited. Does not implicitly {@link Ydb.Discovery.WhoAmIResponse.verify|verify} messages.
+             * @function encodeDelimited
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {Ydb.Discovery.IWhoAmIResponse} message WhoAmIResponse message or plain object to encode
+             * @param {$protobuf.Writer} [writer] Writer to encode to
+             * @returns {$protobuf.Writer} Writer
+             */
+            WhoAmIResponse.encodeDelimited = function encodeDelimited(message, writer) {
+                return this.encode(message, writer).ldelim();
+            };
+
+            /**
+             * Decodes a WhoAmIResponse message from the specified reader or buffer.
+             * @function decode
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @param {number} [length] Message length if known beforehand
+             * @returns {Ydb.Discovery.WhoAmIResponse} WhoAmIResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            WhoAmIResponse.decode = function decode(reader, length) {
+                if (!(reader instanceof $Reader))
+                    reader = $Reader.create(reader);
+                var end = length === undefined ? reader.len : reader.pos + length, message = new $root.Ydb.Discovery.WhoAmIResponse();
+                while (reader.pos < end) {
+                    var tag = reader.uint32();
+                    switch (tag >>> 3) {
+                    case 1:
+                        message.operation = $root.Ydb.Operations.Operation.decode(reader, reader.uint32());
+                        break;
+                    default:
+                        reader.skipType(tag & 7);
+                        break;
+                    }
+                }
+                return message;
+            };
+
+            /**
+             * Decodes a WhoAmIResponse message from the specified reader or buffer, length delimited.
+             * @function decodeDelimited
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+             * @returns {Ydb.Discovery.WhoAmIResponse} WhoAmIResponse
+             * @throws {Error} If the payload is not a reader or valid buffer
+             * @throws {$protobuf.util.ProtocolError} If required fields are missing
+             */
+            WhoAmIResponse.decodeDelimited = function decodeDelimited(reader) {
+                if (!(reader instanceof $Reader))
+                    reader = new $Reader(reader);
+                return this.decode(reader, reader.uint32());
+            };
+
+            /**
+             * Verifies a WhoAmIResponse message.
+             * @function verify
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {Object.<string,*>} message Plain object to verify
+             * @returns {string|null} `null` if valid, otherwise the reason why it is not
+             */
+            WhoAmIResponse.verify = function verify(message) {
+                if (typeof message !== "object" || message === null)
+                    return "object expected";
+                if (message.operation != null && message.hasOwnProperty("operation")) {
+                    var error = $root.Ydb.Operations.Operation.verify(message.operation);
+                    if (error)
+                        return "operation." + error;
+                }
+                return null;
+            };
+
+            /**
+             * Creates a WhoAmIResponse message from a plain object. Also converts values to their respective internal types.
+             * @function fromObject
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {Object.<string,*>} object Plain object
+             * @returns {Ydb.Discovery.WhoAmIResponse} WhoAmIResponse
+             */
+            WhoAmIResponse.fromObject = function fromObject(object) {
+                if (object instanceof $root.Ydb.Discovery.WhoAmIResponse)
+                    return object;
+                var message = new $root.Ydb.Discovery.WhoAmIResponse();
+                if (object.operation != null) {
+                    if (typeof object.operation !== "object")
+                        throw TypeError(".Ydb.Discovery.WhoAmIResponse.operation: object expected");
+                    message.operation = $root.Ydb.Operations.Operation.fromObject(object.operation);
+                }
+                return message;
+            };
+
+            /**
+             * Creates a plain object from a WhoAmIResponse message. Also converts values to other types if specified.
+             * @function toObject
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @static
+             * @param {Ydb.Discovery.WhoAmIResponse} message WhoAmIResponse
+             * @param {$protobuf.IConversionOptions} [options] Conversion options
+             * @returns {Object.<string,*>} Plain object
+             */
+            WhoAmIResponse.toObject = function toObject(message, options) {
+                if (!options)
+                    options = {};
+                var object = {};
+                if (options.defaults)
+                    object.operation = null;
+                if (message.operation != null && message.hasOwnProperty("operation"))
+                    object.operation = $root.Ydb.Operations.Operation.toObject(message.operation, options);
+                return object;
+            };
+
+            /**
+             * Converts this WhoAmIResponse to JSON.
+             * @function toJSON
+             * @memberof Ydb.Discovery.WhoAmIResponse
+             * @instance
+             * @returns {Object.<string,*>} JSON object
+             */
+            WhoAmIResponse.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return WhoAmIResponse;
+        })();
+
+        return Discovery;
+    })();
+
     return Ydb;
 })();
 

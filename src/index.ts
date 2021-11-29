@@ -10,21 +10,22 @@ import { buildTypedValue } from './converter/js-to-ydb';
 import { Ydb as ProtoYdb} from '../proto/bundle';
 import { DropFirst } from './utils';
 
-type YdbOptions = GrpcOptions & {
+export type YdbOptions = GrpcOptions & {
   tablePathPrefix?: string;
 }
 
 export class Ydb {
-  public static AUTO_TX_RW = AUTO_TX_RW;
-  public static AUTO_TX_RO = AUTO_TX_RO;
-  public static typedValue = buildTypedValue;
-  public static PrimitiveTypeId = ProtoYdb.Type.PrimitiveTypeId;
+  static AUTO_TX_RW = AUTO_TX_RW;
+  static AUTO_TX_RO = AUTO_TX_RO;
+  static typedValue = buildTypedValue;
+  static PrimitiveTypeId = ProtoYdb.Type.PrimitiveTypeId;
 
   private grpc: Grpc;
   private tablePathPrefix: string;
   private sessionPool: SessionPool;
 
-  constructor({ endpoint, dbName, iamToken, tablePathPrefix }: YdbOptions) {
+  constructor(public options: YdbOptions) {
+    const { endpoint, dbName, iamToken, tablePathPrefix } = this.options;
     this.grpc = new Grpc({ endpoint, dbName, iamToken });
     this.tablePathPrefix = this.buildTablePathPrefix(tablePathPrefix);
     this.sessionPool = new SessionPool(this.grpc, this.tablePathPrefix);
@@ -32,6 +33,10 @@ export class Ydb {
 
   get endpoint() {
     return this.grpc.endpoint;
+  }
+
+  get discoveredEndpoint() {
+    return this.grpc.discoveredEndpoint;
   }
 
   get dbName() {

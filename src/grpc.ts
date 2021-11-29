@@ -8,8 +8,11 @@ import { MissingOperation, MissingValue, YdbError } from './errors';
 
 const TableService = Ydb.Table.V1.TableService;
 const ScriptingService = Ydb.Scripting.V1.ScriptingService;
+const DiscoveryService = Ydb.Discovery.V1.DiscoveryService;
 
-type ServiceConstructor = typeof TableService | typeof ScriptingService;
+type ServiceConstructor = typeof TableService
+  | typeof ScriptingService
+  | typeof DiscoveryService;
 
 const DEFAULT_ENDPOINT = 'grpcs://ydb.serverless.yandexcloud.net:2135';
 const identity = (x: Uint8Array | Buffer) => x as Buffer;
@@ -26,23 +29,49 @@ export class Grpc {
   readonly iamToken: string;
   readonly tableService: InstanceType<typeof TableService>;
   readonly scriptingService: InstanceType<typeof ScriptingService>;
+  readonly discoveryService: InstanceType<typeof DiscoveryService>;
 
-  private client: grpc.Client;
+  /** Ендпойнт, обнаруженный через discovery и используемый в */
+  discoveredEndpoint = '';
+
+  /** Через этот клиент делаем discovery */
+  private discoveryClient: grpc.Client;
+  /** Через этот клиент делаем все остальные операции */
+  private optimalClientPromise?: Promise<grpc.Client>;
   private metadata: grpc.Metadata;
 
   constructor({ endpoint, dbName, iamToken }: GrpcOptions) {
     this.endpoint = removeGrpcProtocol(endpoint || DEFAULT_ENDPOINT);
     this.dbName = dbName;
     this.iamToken = iamToken;
-    this.client = this.createClient();
+    this.discoveryClient = createGrpcClient(this.endpoint);
     this.metadata = this.createMetadata();
     this.tableService = this.createService('Ydb.Table.V1.TableService', TableService);
     this.scriptingService = this.createService('Ydb.Scripting.V1.ScriptingService', ScriptingService);
+    this.discoveryService = this.createService('Ydb.Discovery.V1.DiscoveryService', DiscoveryService);
   }
 
-  private createClient() {
-    // todo: support unsecure connection
-    return new grpc.Client(this.endpoint, grpc.credentials.createSsl());
+  private async getClient(serviceName: string) {
+    // пока такой самый простой вариант :)
+    return serviceName === 'Ydb.Discovery.V1.DiscoveryService'
+      ? this.discoveryClient
+      : this.getOptimalClient();
+  }
+
+  private async getOptimalClient() {
+    if (!this.optimalClientPromise) {
+      this.optimalClientPromise = this.getOptimalEndpoint()
+        .then(endpoint => endpoint ? createGrpcClient(endpoint) : this.discoveryClient);
+    }
+    return this.optimalClientPromise;
+  }
+
+  private async getOptimalEndpoint() {
+    const response = await this.discoveryService.listEndpoints({ database: this.dbName });
+    const payload = getOperationPayload(response);
+    const { selfLocation, endpoints } = Ydb.Discovery.ListEndpointsResult.decode(payload);
+    const { address, port } = endpoints.find(e => e.location === selfLocation) || endpoints[0];
+    return address && (this.discoveredEndpoint = `${address}:${port}`);
   }
 
   private createMetadata() {
@@ -56,10 +85,17 @@ export class Grpc {
   private createService<T extends ServiceConstructor>(name: string, ctor: T) {
     const rpcImpl: RPCImpl = (method, requestData, callback) => {
       const path = `/${name}/${method.name}`;
-      this.client.makeUnaryRequest(path, identity, identity, requestData, this.metadata, {}, callback);
+      this.getClient(name).then(client => {
+        client.makeUnaryRequest(path, identity, identity, requestData, this.metadata, {}, callback);
+      }, error => callback(null, error));
     };
     return ctor.create(rpcImpl) as InstanceType<T>;
   }
+}
+
+function createGrpcClient(endpoint: string) {
+  // todo: support unsecure connection
+  return new grpc.Client(endpoint, grpc.credentials.createSsl());
 }
 
 function removeGrpcProtocol(url: string) {

@@ -11,6 +11,7 @@ outfile=bundle-runtime
 pbjs -t static-module -r ydb-sdk -w commonjs -p . \
   ydb-api-protos-master/ydb_table_v1.proto \
   ydb-api-protos-master/ydb_scripting_v1.proto \
+  ydb-api-protos-master/ydb_discovery_v1.proto \
   > proto/bundle.js
 
 pbts -o $OUT_DIR/bundle.d.ts $OUT_DIR/bundle.js
