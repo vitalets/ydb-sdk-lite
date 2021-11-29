@@ -35,15 +35,14 @@ export class Grpc {
   readonly tableService: InstanceType<typeof TableService>;
   readonly scriptingService: InstanceType<typeof ScriptingService>;
   readonly discoveryService: InstanceType<typeof DiscoveryService>;
-
-  /** Ендпойнт, обнаруженный через discovery и используемый в */
+  /** Ендпойнт, обнаруженный через discovery */
   discoveredEndpoint = '';
 
   /** Через этот клиент делаем discovery */
-  private discoveryClient: grpc.Client;
+  protected discoveryClient: grpc.Client;
   /** Через этот клиент делаем все остальные операции */
-  private optimalClientPromise?: Promise<grpc.Client>;
-  private metadata: grpc.Metadata;
+  protected optimalClientPromise?: Promise<grpc.Client>;
+  protected metadata: grpc.Metadata;
 
   constructor({ endpoint, dbName, iamToken }: GrpcOptions) {
     this.endpoint = removeGrpcProtocol(endpoint || DEFAULT_ENDPOINT);
@@ -56,14 +55,14 @@ export class Grpc {
     this.discoveryService = this.createService('Ydb.Discovery.V1.DiscoveryService', DiscoveryService);
   }
 
-  private async getClient(serviceName: string) {
+  protected async getClient(serviceName: string) {
     // пока такой самый простой вариант :)
     return serviceName === 'Ydb.Discovery.V1.DiscoveryService'
       ? this.discoveryClient
       : this.getOptimalClient();
   }
 
-  private async getOptimalClient() {
+  protected async getOptimalClient() {
     if (!this.optimalClientPromise) {
       this.optimalClientPromise = this.getOptimalEndpoint()
         .then(endpoint => endpoint ? createGrpcClient(endpoint) : this.discoveryClient);
@@ -71,7 +70,7 @@ export class Grpc {
     return this.optimalClientPromise;
   }
 
-  private async getOptimalEndpoint() {
+  protected async getOptimalEndpoint() {
     debug(`Discovery started`);
     const response = await this.discoveryService.listEndpoints({ database: this.dbName });
     const payload = getOperationPayload(response);
@@ -81,7 +80,7 @@ export class Grpc {
     return address && (this.discoveredEndpoint = `${address}:${port}`);
   }
 
-  private createMetadata() {
+  protected createMetadata() {
     const metadata = new grpc.Metadata();
     metadata.add('x-ydb-database', this.dbName);
     metadata.add('x-ydb-auth-ticket', this.iamToken);
@@ -89,7 +88,7 @@ export class Grpc {
     return metadata;
   }
 
-  private createService<T extends ServiceConstructor>(name: string, ctor: T) {
+  protected createService<T extends ServiceConstructor>(name: string, ctor: T) {
     const rpcImpl: RPCImpl = (method, requestData, callback) => {
       const path = `/${name}/${method.name}`;
       this.getClient(name).then(client => {

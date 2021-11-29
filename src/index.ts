@@ -20,9 +20,9 @@ export class Ydb {
   static typedValue = buildTypedValue;
   static PrimitiveTypeId = ProtoYdb.Type.PrimitiveTypeId;
 
-  private grpc: Grpc;
-  private tablePathPrefix: string;
-  private sessionPool: SessionPool;
+  protected grpc: Grpc;
+  protected tablePathPrefix: string;
+  protected sessionPool: SessionPool;
 
   constructor(public options: YdbOptions) {
     const { endpoint, dbName, iamToken, tablePathPrefix } = this.options;
@@ -77,7 +77,7 @@ export class Ydb {
     await this.sessionPool.destroy();
   }
 
-  private buildTablePathPrefix(tablePathPrefix?: string) {
+  protected buildTablePathPrefix(tablePathPrefix?: string) {
     return tablePathPrefix ? `${this.dbName}/${tablePathPrefix}` : '';
   }
 }
