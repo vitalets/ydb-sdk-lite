@@ -1,10 +1,13 @@
 /**
  * GRPC adapter.
  */
+import Debug from 'debug';
 import * as grpc from '@grpc/grpc-js';
 import type { RPCImpl } from 'protobufjs';
 import { Ydb } from '../../proto/bundle';
 import { GrpcResponse, getOperationPayload } from './payload';
+
+const debug = Debug('ydb-sdk-lite:api');
 
 export { GrpcResponse, getOperationPayload };
 
@@ -69,9 +72,11 @@ export class Grpc {
   }
 
   private async getOptimalEndpoint() {
+    debug(`Discovery started`);
     const response = await this.discoveryService.listEndpoints({ database: this.dbName });
     const payload = getOperationPayload(response);
     const { selfLocation, endpoints } = Ydb.Discovery.ListEndpointsResult.decode(payload);
+    debug(`Discovery done: ${JSON.stringify({ selfLocation, endpoints })}`);
     const { address, port } = endpoints.find(e => e.location === selfLocation) || endpoints[0];
     return address && (this.discoveredEndpoint = `${address}:${port}`);
   }
