@@ -12,6 +12,7 @@
   "scripts": {
     "init": "git config core.hooksPath ./.hooks",
     "lint": "eslint src test --ext .ts",
+    "tsc": "tsc --noEmit",
     "test": "mocha -r ts-node/register test/setup.ts test/specs/*.ts",
     "test:d": "DEBUG=ydb-sdk-lite:* npm t",
     "build": "rm -rf dist && tsc -p tsconfig.build.json",

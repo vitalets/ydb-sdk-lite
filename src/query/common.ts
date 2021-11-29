@@ -1,8 +1,8 @@
 import { Ydb } from '../../proto/bundle';
 import { GrpcResponse, getOperationPayload } from '../grpc';
-import { resultSetToJs } from '../converter/ydb-to-js';
-import { buildTypedValue } from '../converter/js-to-ydb';
-import { inferParamTypesByQuery, InferedTypes } from '../converter/infer';
+import { resultSetToJs } from '../types/ydb-to-js';
+import { buildTypedValue } from '../types/js-to-ydb';
+import { inferParamTypesByQuery, InferedTypes } from '../types/infer';
 import { appendMessageToError } from '../utils';
 
 type IExecuteQueryResult = Ydb.Table.IExecuteQueryResult;

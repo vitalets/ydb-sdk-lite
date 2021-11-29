@@ -6,7 +6,7 @@ import { SessionPool } from './session-pool';
 import { Session } from './session';
 import { AUTO_TX_RW, AUTO_TX_RO } from './query/data-query';
 import { YqlQuery } from './query/yql-query';
-import { buildTypedValue } from './converter/js-to-ydb';
+import { buildTypedValue } from './types/js-to-ydb';
 import { Ydb as ProtoYdb} from '../proto/bundle';
 import { DropFirst } from './utils';
 
