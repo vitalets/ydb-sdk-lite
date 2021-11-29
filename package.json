@@ -15,6 +15,7 @@
     "tsc": "tsc --noEmit",
     "test": "mocha -r ts-node/register test/setup.ts test/specs/*.ts",
     "test:d": "DEBUG=ydb-sdk-lite:* npm t",
+    "check": "ts-node --transpile-only ./scripts/check",
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "pull-proto": "./scripts/pull-proto.sh",
     "compile-proto": "./scripts/compile-proto.sh",

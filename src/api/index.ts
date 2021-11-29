@@ -70,12 +70,13 @@ export class Grpc {
     return this.optimalClientPromise;
   }
 
-  protected async getOptimalEndpoint() {
+  async getOptimalEndpoint() {
     debug(`Discovery started`);
+    const time = Date.now();
     const response = await this.discoveryService.listEndpoints({ database: this.dbName });
     const payload = getOperationPayload(response);
     const { selfLocation, endpoints } = Ydb.Discovery.ListEndpointsResult.decode(payload);
-    debug(`Discovery done: ${JSON.stringify({ selfLocation, endpoints })}`);
+    debug(`Discovery done (${Date.now() - time}ms): ${JSON.stringify({ selfLocation, endpoints })}`);
     const { address, port } = endpoints.find(e => e.location === selfLocation) || endpoints[0];
     return address && (this.discoveredEndpoint = `${address}:${port}`);
   }
