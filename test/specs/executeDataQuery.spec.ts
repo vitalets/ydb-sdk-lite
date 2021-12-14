@@ -73,11 +73,10 @@ describe('executeDataQuery', () => {
     await assert.rejects(promise, /Deadline exceeded during query compilation/);
   });
 
-  it('endpoint / discoveredEndpoint', async () => {
-    await ydb.executeDataQuery(`SELECT * FROM users LIMIT 1`, {}, Ydb.AUTO_TX_RO);
-    assert.equal(ydb.endpoint, 'ydb.serverless.yandexcloud.net:2135');
-    assert.match(ydb.discoveredEndpoint, /ru-central1-[abc]\.ydb\.serverless\.yandexcloud\.net:2135/);
-  });
+  // it.skip('discover endpoints', async () => {
+  //   await ydb.executeDataQuery(`SELECT * FROM users LIMIT 1`, {}, Ydb.AUTO_TX_RO);
+  //   assert.equal(ydb, 'ydb.serverless.yandexcloud.net:2135');
+  // });
 
   // can emulate in tests
   // it.only('handle busy session: retry', async () => {

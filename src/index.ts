@@ -35,10 +35,6 @@ export class Ydb {
     return this.grpc.endpoint;
   }
 
-  get discoveredEndpoint() {
-    return this.grpc.discoveredEndpoint;
-  }
-
   get dbName() {
     return this.grpc.dbName;
   }
