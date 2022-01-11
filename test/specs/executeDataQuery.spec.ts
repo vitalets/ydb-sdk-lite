@@ -66,7 +66,8 @@ describe('executeDataQuery', () => {
     assert.notEqual(id1, id2);
   });
 
-  it('request timeout', async () => {
+  // see: https://cloud.yandex.com/en-ru/docs/ydb/best_practices/timeouts
+  it('operation timeout', async () => {
     const query = `SELECT * FROM users`;
     const operationTimeout = { nanos: 1 };
     const promise = ydb.executeDataQuery(query, {}, Ydb.AUTO_TX_RO, { operationTimeout });
