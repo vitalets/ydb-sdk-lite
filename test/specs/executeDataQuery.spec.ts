@@ -71,7 +71,7 @@ describe('executeDataQuery', () => {
     const query = `SELECT * FROM users`;
     const operationTimeout = { nanos: 1 };
     const promise = ydb.executeDataQuery(query, {}, Ydb.AUTO_TX_RO, { operationTimeout });
-    await assert.rejects(promise, /Deadline exceeded during query compilation/);
+    await assert.rejects(promise, /Query did not complete within specified timeout/);
   });
 
   // it.skip('discover endpoints', async () => {
